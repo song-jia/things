@@ -3,22 +3,18 @@
     <div>
       <button v-show="!newThingModel" v-on:click="showNewThingEditor">+ Add Thing</button>
     </div>
-    <div v-show="newThingModel">
-      <input type="text" placeholder="" v-model="newThingTitle"/>
-      <button v-on:click="saveThingHandler">save</button>
-      <button v-on:click="cancelNewThingModel">cancel</button>
-    </div>
+    <new-thing-editor v-show="newThingModel" v-on:cancel="cancelNewThingModel"></new-thing-editor>
   </div>
 </template>
 
 <script>
   import { addNewThing } from '../vuex/actions'
+  import NewThingEditor from './NewThingEditor'
 
   // private state of this component
   var data = {
     // display new thing editor and hide add thing button when newThingModel is true, default to false
-    newThingModel: false,
-    newThingTitle: ''
+    newThingModel: false
   }
   /*
    * display new thing editor and hide Add Thing link.
@@ -48,6 +44,9 @@
       showNewThingEditor,
       cancelNewThingModel,
       saveThingHandler
+    },
+    components: {
+      NewThingEditor
     },
     vuex: {
       actions: {

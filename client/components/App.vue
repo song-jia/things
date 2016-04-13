@@ -10,12 +10,14 @@
 </template>
 
 <script>
-import toolbar from './Toolbar.vue'
+  import store from '../vuex/store'
+  import toolbar from './Toolbar.vue'
 
-export default {
-  components: {
-    toolbar
+  export default {
+    components: {
+      toolbar
+    },
+    store
   }
-}
 </script>
 

@@ -1,9 +1,15 @@
 <template>
   <div class="c-panel">
     <div>
-      <button v-show="!newThingModel" v-on:click="showNewThingEditor">+ Add Thing</button>
+      <a v-show="!newThingModel" v-on:click="showNewThingEditor" class="action-link new-link">
+        <span class="icon">+</span> Add Thing
+      </a>
     </div>
-    <new-thing-editor v-show="newThingModel" v-on:cancel="cancelNewThingModel"></new-thing-editor>
+    <new-thing-editor
+      v-show="newThingModel"
+      v-on:add="addNewThingHandler"
+      v-on:cancel="cancelNewThingModel"
+    ></new-thing-editor>
   </div>
 </template>
 
@@ -31,8 +37,8 @@
   /*
    * save defails of thing
    */
-  function saveThingHandler () {
-    this.addNewThing({title: this.newThingTitle})
+  function addNewThingHandler (payload) {
+    this.addNewThing(payload)
     data.newThingModel = false
   }
 
@@ -43,7 +49,7 @@
     methods: {
       showNewThingEditor,
       cancelNewThingModel,
-      saveThingHandler
+      addNewThingHandler
     },
     components: {
       NewThingEditor
@@ -59,5 +65,11 @@
 <style>
   .c-panel {
     padding: 10px;
+  }
+  .c-panel .new-link .icon {
+    display: inline-block;
+    margin-right: 8px;
+    font-size: 15px;
+    font-weight: 600;
   }
 </style>

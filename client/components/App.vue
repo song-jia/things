@@ -21,3 +21,23 @@
   }
 </script>
 
+<style>
+  body {
+    color: #202020;
+  }
+  /* buttons */
+  .button-small {
+    font-size: 85%;
+  }
+  .button-blue {
+    color: white;
+    background: #1f8dd6;
+  }
+  .action-link {
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .action-link:hover {
+    text-decoration: underline;
+  }
+</style>

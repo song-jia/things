@@ -16,14 +16,15 @@
  */
 export function NEW_THING (state, payload) {
   var createdTime = (new Date()).getTime()
+  var id = 't_' + createdTime
   var newThing = {
+    id: id,
     title: payload.title,
     dueDateType: payload.dueDateType,
     dueDate: payload.dueDate,
     complete: false,
     createdDate: createdTime
   }
-  var id = 't_' + createdTime
   state.things = {
     ...state.things,
     [id]: newThing

@@ -1,6 +1,7 @@
 <template>
   <div class="c-panel">
-    <div>
+    <things-list></things-list>
+    <div class="tools">
       <a v-show="!newThingModel" v-on:click="showNewThingEditor" class="action-link new-link">
         <span class="icon">+</span> Add Thing
       </a>
@@ -16,6 +17,7 @@
 <script>
   import { addNewThing } from '../vuex/actions'
   import NewThingEditor from './NewThingEditor'
+  import ThingsList from './ThingsList'
 
   // private state of this component
   var data = {
@@ -52,7 +54,8 @@
       addNewThingHandler
     },
     components: {
-      NewThingEditor
+      NewThingEditor,
+      ThingsList
     },
     vuex: {
       actions: {
@@ -71,5 +74,8 @@
     margin-right: 8px;
     font-size: 15px;
     font-weight: 600;
+  }
+  .c-panel .tools {
+    padding: 10px 0;
   }
 </style>

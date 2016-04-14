@@ -17,7 +17,7 @@
 <script>
 var data = {
   title: '',
-  dueDate: null,
+  dueDate: '',
   showDatePicker: false
 }
 /*
@@ -25,7 +25,7 @@ var data = {
  */
 function clearForm () {
   data.title = ''
-  data.dueDate = null
+  data.dueDate = ''
 }
 export default {
   data () {

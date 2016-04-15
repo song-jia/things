@@ -30,8 +30,21 @@ export function NEW_THING (state, payload) {
     [id]: newThing
   }
 }
-
+/*
+* remove a thing record.
+*/
 export function REMOVE_THING (state, payload) {
   delete state.things[payload.id]
+  state.things = {...state.things}
+}
+/*
+* update a thing record.
+*/
+export function UPDATE_THING (state, payload) {
+  // do nothing if id is not exist.
+  if (!state.things.hasOwnProperty(payload.id)) {
+    return false
+  }
+  Object.assign(state.things[payload.id], payload)
   state.things = {...state.things}
 }

@@ -3,31 +3,43 @@
     v-on:mouseover="mouseoverHandler"
     v-on:mouseout="mouseoutHandler"
   >
-    <div class="viewbox">
-      <input type="checkbox" class="toggle" id="{{ 'ct_' + thing.id }}"/>
-      <label for="{{ 'ct_' + thing.id }}"></label>
-      <span class="title">{{ thing.title }}</span>
-      <a class="menu-button" v-show="hover" v-on:click="showMenuHandler"><i class="fa fa-ellipsis-h"></i></a>
+    <div v-show="!editing">
+      <div class="viewbox">
+        <input type="checkbox" class="toggle" id="{{ 'ct_' + thing.id }}"/>
+        <label for="{{ 'ct_' + thing.id }}"></label>
+        <span class="title">{{ thing.title }}</span>
+        <a class="menu-button" v-show="hover" v-on:click="showMenuHandler"><i class="fa fa-ellipsis-h"></i></a>
+      </div>
+      <div class="toolbox" v-show="showMenu" :transition="expand">
+        <a class="link" v-on:click="beginEditing"><i class="fa fa-pencil-square-o"></i> edit</a>
+        <a class="link remove" v-on:click="removeHandler"><i class="fa fa-trash-o"></i> remove</a>
+      </div>
     </div>
-    <div class="toolbox" v-show="showMenu" :transition="expand">
-      <a class="link"><i class="fa fa-pencil-square-o"></i> edit</a>
-      <a class="link remove" v-on:click="removeHandler"><i class="fa fa-trash-o"></i> remove</a>
-    </div>
+    <thing-editor
+      v-bind:default="thing"
+      v-if="editing"
+      v-on:save="saveEditing"
+      v-on:cancel="cancelEditing"></thing-editor>
   </li>
 </template>
 
 <script>
-import { removeThing } from '../vuex/actions'
+import { removeThing, updateThing } from '../vuex/actions'
+import ThingEditor from './ThingEditor'
 
 export default {
   data () {
     return {
       hover: false,
-      showMenu: false
+      showMenu: false,
+      editing: false
     }
   },
   props: {
     thing: Object
+  },
+  components: {
+    ThingEditor
   },
   methods: {
     /*
@@ -57,6 +69,23 @@ export default {
     */
     removeHandler () {
       this.removeThing({id: this.thing.id})
+    },
+    /*
+    * open editor.
+    */
+    beginEditing () {
+      this.showMenu = false
+      this.editing = true
+    },
+    /*
+    * hide editor.
+    */
+    cancelEditing () {
+      this.editing = false
+    },
+    saveEditing (thing) {
+      this.updateThing(thing)
+      this.editing = false
     }
   },
   events: {
@@ -71,7 +100,8 @@ export default {
   },
   vuex: {
     actions: {
-      removeThing
+      removeThing,
+      updateThing
     }
   }
 }
@@ -81,6 +111,7 @@ export default {
   .thing-item {
     border-bottom: 1px solid #f0f0f0;
     font-size: 13px;
+    padding: 2px 0;
   }
   .thing-item .toggle {
     display: none;

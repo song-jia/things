@@ -1,9 +1,9 @@
 <template>
-  <div id="app" class="pure-g">
+  <div id="app" class="app pure-g">
     <div class="pure-u-1-5">
       <toolbar></toolbar>
     </div>
-    <div class=" pure-u-4-5">
+    <div class="pure-u-4-5 panel">
       <router-view></router-view>
     </div>
   </div>
@@ -22,8 +22,16 @@
 </script>
 
 <style>
+  html {
+    height: 100%;
+  }
   body {
     color: #202020;
+    background: #fafafa;
+    height: 100%;
+  }
+  div {
+    box-sizing: border-box;
   }
   /* buttons */
   .button-small {
@@ -39,5 +47,13 @@
   }
   .action-link:hover {
     text-decoration: underline;
+  }
+  .app {
+    max-width: 950px;
+    margin: auto;
+    height: 100%;
+  }
+  .app .panel {
+    height: 100%;
   }
 </style>

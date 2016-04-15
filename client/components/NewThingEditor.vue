@@ -77,9 +77,6 @@ export default {
 </script>
 
 <style>
-  .new-thing-editor {
-    padding: 10px 0;
-  }
   .new-thing-editor input {
     font-size: 13px;
     padding: 5px;

@@ -30,3 +30,8 @@ export function NEW_THING (state, payload) {
     [id]: newThing
   }
 }
+
+export function REMOVE_THING (state, payload) {
+  delete state.things[payload.id]
+  state.things = {...state.things}
+}

@@ -17,6 +17,7 @@ router.redirect({
 router.map({
   // things collection panel
   '/collections': {
+    name: 'collections',
     component: CollectionPanel
   },
   // todo action panel

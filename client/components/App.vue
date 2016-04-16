@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="app pure-g">
+  <div id="app" class="app pure-g" v-on:click.capture="clickSomewhereHandler">
     <div class="pure-u-1-5">
       <toolbar></toolbar>
     </div>
@@ -16,6 +16,11 @@
   export default {
     components: {
       toolbar
+    },
+    methods: {
+      clickSomewhereHandler (e) {
+        this.$broadcast('click-somewhere', e)
+      }
     },
     store
   }

@@ -23,7 +23,8 @@ export function NEW_THING (state, payload) {
     dueDateType: payload.dueDateType,
     dueDate: payload.dueDate,
     complete: false,
-    createdDate: createdTime
+    createdDate: createdTime,
+    priority: ''
   }
   state.things = {
     ...state.things,

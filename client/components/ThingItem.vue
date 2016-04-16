@@ -5,15 +5,16 @@
   >
     <div v-show="!editing">
       <div class="viewbox">
-        <input type="checkbox" class="toggle" id="{{ 'ct_' + thing.id }}"/>
+<!--         <input type="checkbox" class="toggle" id="{{ 'ct_' + thing.id }}"/>
         <label for="{{ 'ct_' + thing.id }}"></label>
+ -->
         <i class="fa fa-flag" v-if="!!thing.priority" v-bind:class="priorityStyle"></i>
         <span class="title">{{ thing.title }}</span>
         <a class="menu-button" v-show="hover" v-on:click="showMenuHandler"><i class="fa fa-ellipsis-h"></i></a>
       </div>
       <div class="toolbox" v-show="showMenu" :transition="expand">
         <a class="link" v-on:click="beginEditing"><i class="fa fa-pencil-square-o"></i> edit</a>
-        <a class="link" v-on:click="showPriorityList"><i class="fa fa-flag"></i> priority</a>
+        <a class="link" v-on:click="showPriorityList"><i class="fa fa-flag" v-bind:class="priorityStyle"></i> priority</a>
         <a class="link remove" v-on:click="removeHandler"><i class="fa fa-trash-o"></i> remove</a>
         <div class="priorities" v-show="showPriorities" id="priorities-list">
           <a v-on:click="changePriority" data-id="1"><i class="fa fa-flag important-urgent"></i> important urgent</a>
@@ -178,7 +179,7 @@
     background: none;
     border: none;
     font-size: 17px;
-    line-height: 28px;
+    line-height: 2px;
     color: #aaaaaa;
     text-align: center;
     vertical-align: middle;

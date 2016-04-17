@@ -24,7 +24,8 @@ export function NEW_THING (state, payload) {
     dueDate: payload.dueDate,
     complete: false,
     createdDate: createdTime,
-    priority: ''
+    priority: '',
+    actions: []
   }
   state.things = {
     ...state.things,
@@ -48,4 +49,22 @@ export function UPDATE_THING (state, payload) {
   }
   Object.assign(state.things[payload.id], payload)
   state.things = {...state.things}
+}
+
+export function NEW_ACTION (state, payload) {
+  var addDate = new Date()
+  var aId = 'a_' + addDate.getTime()
+  var newAction = {
+    id: aId,
+    title: payload.title,
+    dueDate: payload.dueDate,
+    createdDate: String(addDate.getTime())
+  }
+  // save action data to store
+  state.actions = {
+    ...state.actions,
+    [aId]: newAction
+  }
+  // link action to thing
+  state.things[payload.thingId].actions.push(aId)
 }

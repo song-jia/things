@@ -13,6 +13,7 @@
         <a class="menu-button" v-show="hover" v-on:click="showMenuHandler"><i class="fa fa-ellipsis-h"></i></a>
       </div>
       <div class="toolbox" v-show="showMenu" :transition="expand">
+        <a class="link" v-on:click="openNewActionEditor"><i class="fa fa-paper-plane" aria-hidden="true"></i> add action</a>
         <a class="link" v-on:click="beginEditing"><i class="fa fa-pencil-square-o"></i> edit</a>
         <a class="link" v-on:click="showPriorityList"><i class="fa fa-flag" v-bind:class="priorityStyle"></i> priority</a>
         <a class="link remove" v-on:click="removeHandler"><i class="fa fa-trash-o"></i> remove</a>
@@ -21,6 +22,16 @@
           <a v-on:click="changePriority" data-id="2"><i class="fa fa-flag important-not-urgent"></i> important not urgent</a>
           <a v-on:click="changePriority" data-id="3"><i class="fa fa-flag not-important-urgent"></i> not important urgent</a>
           <a v-on:click="changePriority" data-id="4"><i class="fa fa-flag not-important-not-urgent"></i> not important not urgent</a>
+        </div>
+      </div>
+      <div class="action-area">
+        <action-editor
+          v-show="showNewActionEditor"
+          v-on:save="saveNewAction"
+          v-on:cancel="cancelNewActionEditor"
+        ></action-editor>
+        <div class="action-list">
+          <action-item v-for="action in thing.actions" v-bind:id="action"></action-item>
         </div>
       </div>
     </div>
@@ -33,8 +44,10 @@
 </template>
 
 <script>
-  import { removeThing, updateThing } from '../vuex/actions'
+  import { removeThing, updateThing, addNewAction } from '../vuex/actions'
   import ThingEditor from './ThingEditor'
+  import ActionEditor from './ActionEditor'
+  import ActionItem from './ActionItem'
 
   export default {
     data () {
@@ -42,7 +55,8 @@
         hover: false,
         showMenu: false,
         editing: false,
-        showPriorities: false
+        showPriorities: false,
+        showNewActionEditor: false
       }
     },
     computed: {
@@ -59,7 +73,9 @@
       thing: Object
     },
     components: {
-      ThingEditor
+      ThingEditor,
+      ActionEditor,
+      ActionItem
     },
     methods: {
       /*
@@ -122,6 +138,19 @@
         })
         // close priorities list
         this.showPriorities = false
+      },
+      saveNewAction (data) {
+        this.addNewAction({
+          thingId: this.thing.id,
+          ...data
+        })
+        this.showNewActionEditor = false
+      },
+      openNewActionEditor () {
+        this.showNewActionEditor = true
+      },
+      cancelNewActionEditor () {
+        this.showNewActionEditor = false
       }
     },
     events: {
@@ -138,7 +167,8 @@
     vuex: {
       actions: {
         removeThing,
-        updateThing
+        updateThing,
+        addNewAction
       }
     }
   }
@@ -241,5 +271,8 @@
   }
   .not-important-not-urgent {
     color: #c377e0;
+  }
+  .action-area {
+    padding-left: 20px;
   }
 </style>

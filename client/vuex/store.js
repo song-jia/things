@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 // init state of app
 const state = {
-  things: {}
+  things: {},
+  actions: {}
 }
 
 export default new Vuex.Store({

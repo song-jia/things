@@ -9,3 +9,7 @@ export function removeThing ({ dispatch }, payload) {
 export function updateThing ({ dispatch }, payload) {
   dispatch('UPDATE_THING', payload)
 }
+
+export function addNewAction ({ dispatch }, payload) {
+  dispatch('NEW_ACTION', payload)
+}

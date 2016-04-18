@@ -9,11 +9,15 @@
     props: {
       id: String
     },
+    computed: {
+      details () {
+        return this.actions[this.id]
+      }
+    },
     vuex: {
       getters: {
-        details (state) {
-          debugger
-          return state.actions[this.id]
+        actions (state) {
+          return state.actions
         }
       }
     }

@@ -8,6 +8,9 @@
 <!--         <input type="checkbox" class="toggle" id="{{ 'ct_' + thing.id }}"/>
         <label for="{{ 'ct_' + thing.id }}"></label>
  -->
+        <a v-show="hasAction" v-on:click="toggleShowActions" class="icon-button">
+          <i class="fa" v-bind:class="{'fa-caret-right': !showActions, 'fa-caret-down': showActions}"></i>
+        </a>
         <i class="fa fa-flag" v-if="!!thing.priority" v-bind:class="priorityStyle"></i>
         <span class="title">{{ thing.title }}</span>
         <a class="menu-button" v-show="hover" v-on:click="showMenuHandler"><i class="fa fa-ellipsis-h"></i></a>
@@ -30,7 +33,7 @@
           v-on:save="saveNewAction"
           v-on:cancel="cancelNewActionEditor"
         ></action-editor>
-        <div class="action-list">
+        <div class="action-list" v-show="showActions">
           <action-item v-for="action in thing.actions" v-bind:id="action"></action-item>
         </div>
       </div>
@@ -56,7 +59,8 @@
         showMenu: false,
         editing: false,
         showPriorities: false,
-        showNewActionEditor: false
+        showNewActionEditor: false,
+        showActions: false
       }
     },
     computed: {
@@ -67,6 +71,9 @@
           'not-important-urgent': this.thing.priority === '3',
           'not-important-not-urgent': this.thing.priority === '4'
         }
+      },
+      hasAction () {
+        return this.thing.actions.length > 0
       }
     },
     props: {
@@ -145,12 +152,16 @@
           ...data
         })
         this.showNewActionEditor = false
+        this.showActions = true
       },
       openNewActionEditor () {
         this.showNewActionEditor = true
       },
       cancelNewActionEditor () {
         this.showNewActionEditor = false
+      },
+      toggleShowActions () {
+        this.showActions = !this.showActions
       }
     },
     events: {
@@ -274,5 +285,14 @@
   }
   .action-area {
     padding-left: 20px;
+  }
+  .action-list {
+    border-top: solid 1px #cccccc;
+  }
+  .icon-button {
+    display: inline-block;
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
   }
 </style>

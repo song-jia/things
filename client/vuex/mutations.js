@@ -23,10 +23,72 @@ export function NEW_THING (state, payload) {
     dueDateType: payload.dueDateType,
     dueDate: payload.dueDate,
     complete: false,
-    createdDate: createdTime
+    createdDate: createdTime,
+    priority: '',
+    actions: []
   }
   state.things = {
     ...state.things,
     [id]: newThing
   }
+}
+/*
+* remove a thing record.
+*/
+export function REMOVE_THING (state, payload) {
+  delete state.things[payload.id]
+  state.things = {...state.things}
+}
+/*
+* update a thing record.
+*/
+export function UPDATE_THING (state, payload) {
+  // do nothing if id is not exist.
+  if (!state.things.hasOwnProperty(payload.id)) {
+    return false
+  }
+  Object.assign(state.things[payload.id], payload)
+  state.things = {...state.things}
+}
+
+export function NEW_ACTION (state, payload) {
+  var addDate = new Date()
+  var aId = 'a_' + addDate.getTime()
+  var newAction = {
+    id: aId,
+    title: payload.title,
+    dueDate: payload.dueDate,
+    createdDate: String(addDate.getTime()),
+    refThing: payload.thingId
+  }
+  // save action data to store
+  state.actions = {
+    ...state.actions,
+    [aId]: newAction
+  }
+  // link action to thing
+  state.things[payload.thingId].actions.push(aId)
+}
+
+export function REMOVE_ACTION (state, payload) {
+  var refThing = state.actions[payload.id]['refThing']
+  // delete action data
+  delete state.actions[payload.id]
+  state.actions = {...state.actions}
+  // delete action ref from thing's action list
+  var actions = state.things[refThing]['actions']
+  for (let i = 0; i < actions.length; i++) {
+    if (actions[i] === payload.id) {
+      actions.splice(i, 1)
+    }
+  }
+  state.things = {...state.things}
+}
+
+export function UPDATE_ACTION (state, payload) {
+  if (!state.actions.hasOwnProperty(payload.id)) {
+    return false
+  }
+  Object.assign(state.actions[payload.id], payload)
+  state.actions = {...state.actions}
 }

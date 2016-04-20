@@ -58,7 +58,8 @@ export function NEW_ACTION (state, payload) {
     id: aId,
     title: payload.title,
     dueDate: payload.dueDate,
-    createdDate: String(addDate.getTime())
+    createdDate: String(addDate.getTime()),
+    refThing: payload.thingId
   }
   // save action data to store
   state.actions = {
@@ -67,4 +68,19 @@ export function NEW_ACTION (state, payload) {
   }
   // link action to thing
   state.things[payload.thingId].actions.push(aId)
+}
+
+export function REMOVE_ACTION (state, payload) {
+  var refThing = state.actions[payload.id]['refThing']
+  // delete action data
+  delete state.actions[payload.id]
+  state.actions = {...state.actions}
+  // delete action ref from thing's action list
+  var actions = state.things[refThing]['actions']
+  for (let i = 0; i < actions.length; i++) {
+    if (actions[i] === payload.id) {
+      actions.splice(i, 1)
+    }
+  }
+  state.things = {...state.things}
 }

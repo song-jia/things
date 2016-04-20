@@ -13,3 +13,7 @@ export function updateThing ({ dispatch }, payload) {
 export function addNewAction ({ dispatch }, payload) {
   dispatch('NEW_ACTION', payload)
 }
+
+export function removeAction ({ dispatch }, payload) {
+  dispatch('REMOVE_ACTION', payload)
+}

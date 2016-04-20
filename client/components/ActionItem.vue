@@ -12,6 +12,8 @@
 </template>
 
 <script>
+  import { removeAction } from '../vuex/actions'
+
   export default {
     data () {
       return {
@@ -27,6 +29,12 @@
       */
       showMenuHandler () {
         this.showMenu = !this.showMenu
+      },
+      /*
+      * remove action.
+      */
+      removeHandler () {
+        this.removeAction({id: this.id})
       }
     },
     computed: {
@@ -39,6 +47,9 @@
         actions (state) {
           return state.actions
         }
+      },
+      actions: {
+        removeAction
       }
     }
   }

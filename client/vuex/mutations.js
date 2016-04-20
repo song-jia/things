@@ -84,3 +84,11 @@ export function REMOVE_ACTION (state, payload) {
   }
   state.things = {...state.things}
 }
+
+export function UPDATE_ACTION (state, payload) {
+  if (!state.actions.hasOwnProperty(payload.id)) {
+    return false
+  }
+  Object.assign(state.actions[payload.id], payload)
+  state.actions = {...state.actions}
+}

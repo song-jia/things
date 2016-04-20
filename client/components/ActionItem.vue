@@ -1,27 +1,39 @@
 <template>
-  <div class="action-item">
-    <div class="viewbox">
-    <span class="title">{{ details.title }}</span>
-    <a class="menu-button" v-on:click="showMenuHandler"><i class="fa fa-ellipsis-h"></i></a>
+  <li class="action-item">
+    <div v-show="!editing">
+      <div class="viewbox">
+        <span class="title">{{ details.title }}</span>
+        <a class="menu-button" v-on:click="showMenuHandler"><i class="fa fa-ellipsis-h"></i></a>
+      </div>
+      <div class="toolbox" v-show="showMenu" :transition="expand">
+        <a class="link" v-on:click="beginEditing"><i class="fa fa-pencil-square-o"></i> edit</a>
+        <a class="link remove" v-on:click="removeHandler"><i class="fa fa-trash-o"></i> remove</a>
+      </div>
     </div>
-    <div class="toolbox" v-show="showMenu" :transition="expand">
-      <a class="link" v-on:click="beginEditing"><i class="fa fa-pencil-square-o"></i> edit</a>
-      <a class="link remove" v-on:click="removeHandler"><i class="fa fa-trash-o"></i> remove</a>
-  </div>
-  </div>
+    <action-editor
+      v-bind:default="details"
+      v-if="editing"
+      v-on:save="saveEditing"
+      v-on:cancel="cancelEditing"></action-editor>
+  </li>
 </template>
 
 <script>
-  import { removeAction } from '../vuex/actions'
+  import ActionEditor from './ActionEditor'
+  import { removeAction, updateAction } from '../vuex/actions'
 
   export default {
     data () {
       return {
-        showMenu: false
+        showMenu: false,
+        editing: false
       }
     },
     props: {
       id: String
+    },
+    components: {
+      ActionEditor
     },
     methods: {
       /*
@@ -35,6 +47,26 @@
       */
       removeHandler () {
         this.removeAction({id: this.id})
+      },
+      /*
+      * open editor.
+      */
+      beginEditing () {
+        this.showMenu = false
+        this.editing = true
+      },
+      /*
+      * close editor
+      */
+      cancelEditing () {
+        this.editing = false
+      },
+      /*
+      * save edit info.
+      */
+      saveEditing (action) {
+        this.updateAction(action)
+        this.editing = false
       }
     },
     computed: {
@@ -49,15 +81,14 @@
         }
       },
       actions: {
-        removeAction
+        removeAction,
+        updateAction
       }
     }
   }
 </script>
 
 <style>
-  .action-item {
-  }
   .action-item .viewbox {
     padding: 5px 0;
   }

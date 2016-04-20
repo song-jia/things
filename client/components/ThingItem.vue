@@ -5,9 +5,9 @@
   >
     <div v-show="!editing">
       <div class="viewbox">
-<!--         <input type="checkbox" class="toggle" id="{{ 'ct_' + thing.id }}"/>
-        <label for="{{ 'ct_' + thing.id }}"></label>
- -->
+        <!--         <input type="checkbox" class="toggle" id="{{ 'ct_' + thing.id }}"/>
+                <label for="{{ 'ct_' + thing.id }}"></label>
+         -->
         <a v-show="hasAction" v-on:click="toggleShowActions" class="icon-button">
           <i class="fa" v-bind:class="{'fa-caret-right': !showActions, 'fa-caret-down': showActions}"></i>
         </a>

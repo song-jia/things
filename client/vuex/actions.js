@@ -21,3 +21,9 @@ export function removeAction ({ dispatch }, payload) {
 export function updateAction ({ dispatch }, payload) {
   dispatch('UPDATE_ACTION', payload)
 }
+
+export function addActionToToday ({ dispatch }, id) {
+  var d = new Date()
+  var dueDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+  dispatch('UPDATE_ACTION', {id: id, dueDate: dueDate})
+}

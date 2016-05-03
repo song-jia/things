@@ -6,6 +6,7 @@
         <a class="menu-button" v-on:click="showMenuHandler"><i class="fa fa-ellipsis-h"></i></a>
       </div>
       <div class="toolbox" v-show="showMenu" :transition="expand">
+        <a class="link today" v-bind:class="{'active': this.isToday}" v-on:click="doItToday"><i class="fa fa-rocket"></i> today</a>
         <a class="link" v-on:click="beginEditing"><i class="fa fa-pencil-square-o"></i> edit</a>
         <a class="link remove" v-on:click="removeHandler"><i class="fa fa-trash-o"></i> remove</a>
       </div>
@@ -20,7 +21,7 @@
 
 <script>
   import ActionEditor from './ActionEditor'
-  import { removeAction, updateAction } from '../vuex/actions'
+  import { removeAction, updateAction, addActionToToday } from '../vuex/actions'
 
   export default {
     data () {
@@ -67,11 +68,22 @@
       saveEditing (action) {
         this.updateAction(action)
         this.editing = false
+      },
+      /*
+      * add action to today's todo list.
+      */
+      doItToday () {
+        this.addActionToToday(this.id)
       }
     },
     computed: {
       details () {
         return this.actions[this.id]
+      },
+      isToday () {
+        var d = new Date()
+        var today = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+        return this.details['dueDate'] === today
       }
     },
     vuex: {
@@ -82,7 +94,8 @@
       },
       actions: {
         removeAction,
-        updateAction
+        updateAction,
+        addActionToToday
       }
     }
   }
@@ -109,5 +122,9 @@
     text-align: center;
     vertical-align: middle;
     float: right;
+  }
+  .action-item .today.active {
+    color: red;
+    pointer-events: none;
   }
 </style>

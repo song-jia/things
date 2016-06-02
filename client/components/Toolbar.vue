@@ -3,7 +3,7 @@
     <span class="pure-menu-heading">Things</span>
     <ul class="pure-menu-list">
       <li class="pure-menu-item"><a v-link="{ path: '/collections' }" class="pure-menu-link">collections</a></li>
-      <li class="pure-menu-item"><a v-link="{ path: '/actions' }" class="pure-menu-link">actions</a></li>
+      <li class="pure-menu-item"><a v-link="{ path: '/actions' }" class="pure-menu-link">today</a></li>
     </ul>
   </div>
 </template>

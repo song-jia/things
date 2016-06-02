@@ -2,7 +2,7 @@ import Router from 'vue-router'
 import Vue from 'vue'
 import App from './components/App.vue'
 import CollectionPanel from './components/CollectionPanel.vue'
-import ActionPanel from './components/ActionPanel.vue'
+import TodayActionPanel from './components/TodayActionPanel.vue'
 
 Vue.use(Router)
 
@@ -22,7 +22,7 @@ router.map({
   },
   // todo action panel
   '/actions': {
-    component: ActionPanel
+    component: TodayActionPanel
   }
 })
 

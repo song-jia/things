@@ -21,7 +21,7 @@ router.map({
     component: CollectionPanel
   },
   // todo action panel
-  '/actions': {
+  '/today': {
     component: TodayActionPanel
   }
 })

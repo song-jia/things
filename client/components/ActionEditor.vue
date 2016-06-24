@@ -4,14 +4,16 @@
       New Action:
     </div>
     <div class="pure-g">
-      <input type="text" placeholder="" v-model="title" class="input-title pure-u-4-5" value="{{ default.title }}"/>
+      <input type="text" placeholder="" class="input-title pure-u-4-5"
+        value="{{ default.title }}" v-model="title" />
       <input type="text" placeholder="due date" class="pure-u-1-5"
-        v-on:focus="dueDateFocusHandler"
-        v-on:blur="dueDateBlurHandler"
+        v-on:focus="dueDateFocusHandler" v-on:blur="dueDateBlurHandler"
         v-model="dueDate" />
     </div>
     <div class="button-group">
-      <button v-on:click="saveHandler" class="button-blue button-small pure-button">save</button>
+      <button v-on:click="saveHandler" class="button-blue button-small pure-button">
+        save
+      </button>
       <a v-on:click="cancelHandler" class="action-link cancel-link">cancel</a>
     </div>
   </div>

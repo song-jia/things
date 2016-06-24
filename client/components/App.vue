@@ -59,6 +59,7 @@
     height: 100%;
   }
   .app .panel {
+    font-size: 13px;
     height: 100%;
   }
 </style>

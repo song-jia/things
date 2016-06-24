@@ -16,7 +16,8 @@
         <a class="menu-button" v-show="hover" v-on:click="showMenuHandler"><i class="fa fa-ellipsis-h"></i></a>
       </div>
       <div class="toolbox" v-show="showMenu" :transition="expand">
-        <a class="link" v-on:click="openNewActionEditor"><i class="fa fa-paper-plane" aria-hidden="true"></i> add action</a>
+        <a class="link" v-on:click="openNewActionEditor">
+          <i class="fa fa-paper-plane" aria-hidden="true"></i> add action</a>
         <a class="link" v-on:click="beginEditing"><i class="fa fa-pencil-square-o"></i> edit</a>
         <a class="link" v-on:click="showPriorityList"><i class="fa fa-flag" v-bind:class="priorityStyle"></i> priority</a>
         <a class="link remove" v-on:click="removeHandler"><i class="fa fa-trash-o"></i> remove</a>
@@ -188,7 +189,6 @@
 <style>
   .thing-item {
     border-bottom: 1px solid #f0f0f0;
-    font-size: 13px;
     padding: 2px 0;
   }
   .thing-item .toggle {

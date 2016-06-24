@@ -1,7 +1,6 @@
 <template>
-  <div class="a-panel">
-    today actions
-    <ul>
+  <div class="today-panel">
+    <ul class="t-a-list">
       <action-item
         v-for="id in actions"
         v-bind:id="id"
@@ -30,7 +29,13 @@ export default {
 </script>
 
 <style>
-.a-panel {
+.today-panel {
   padding: 10px;
+  background-color: white;
+  min-height: 100%;
+}
+.t-a-list {
+  padding: 0;
+  list-style: none;
 }
 </style>

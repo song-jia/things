@@ -8,8 +8,8 @@
         v-model="dueDate" />
     </div>
     <div class="button-group">
-      <button v-on:click="saveHandler" class="button-blue button-small pure-button">save</button>
-      <a v-on:click="cancelHandler" class="action-link cancel-link">cancel</a>
+      <button v-on:click="saveHandler" class="pure-button">save</button>
+      <a v-on:click="cancelHandler" class="">cancel</a>
     </div>
   </div>
 </template>

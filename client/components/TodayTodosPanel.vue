@@ -1,16 +1,16 @@
 <template>
   <div class="today-panel">
     <ul class="t-a-list">
-      <action-item
+      <todo-item
         v-for="id in actions"
         v-bind:id="id"
-      ></action-item>
+      ></todo-item>
     </ul>
   </div>
 </template>
 
 <script>
-import ActionItem from './ActionItem'
+import TodayTodoItem from './TodayTodoItem'
 import { getTodayActions } from '../vuex/getters'
 
 export default {
@@ -18,7 +18,7 @@ export default {
     return {}
   },
   components: {
-    ActionItem
+    'TodoItem': TodayTodoItem
   },
   vuex: {
     getters: {

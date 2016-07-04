@@ -25,7 +25,7 @@
     store
   }
 </script>
-
+<!-- global stylesheet -->
 <style>
   html {
     height: 100%;
@@ -33,33 +33,22 @@
   body {
     color: #202020;
     background: #fafafa;
+    font-size: 13px;
     height: 100%;
   }
   div {
     box-sizing: border-box;
   }
-  /* buttons */
-  .button-small {
-    font-size: 85%;
-  }
-  .button-blue {
-    color: white;
-    background: #1f8dd6;
-  }
-  .action-link {
-    cursor: pointer;
-    font-size: 13px;
-  }
-  .action-link:hover {
-    text-decoration: underline;
-  }
+</style>
+
+<!-- local stylesheet -->
+<style scoped>
   .app {
     max-width: 950px;
     margin: auto;
     height: 100%;
   }
-  .app .panel {
-    font-size: 13px;
+  .panel {
     height: 100%;
   }
 </style>

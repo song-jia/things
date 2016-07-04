@@ -32,7 +32,10 @@
   }
 </script>
 
-<style>
+<style scoped>
+.toolbar {
+  font-size: 17px;
+}
 .toolbar .pure-menu-heading {
   font-weight: 600;
 }

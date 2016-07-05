@@ -25,3 +25,7 @@ export function updateAction ({ dispatch }, payload) {
 export function addActionToToday ({ dispatch }, id) {
   dispatch('ADD_TO_TODAY', {id: id})
 }
+
+export function removeTodayAction ({ dispatch }, id) {
+  dispatch('REMOVE_FROM_TODAY', {id: id})
+}

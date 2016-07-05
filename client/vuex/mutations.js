@@ -59,7 +59,10 @@ export function NEW_ACTION (state, payload) {
     title: payload.title,
     dueDate: payload.dueDate,
     createdDate: String(addDate.getTime()),
-    refThing: payload.thingId
+    refThing: payload.thingId,
+    startTime: 0,
+    status: '',
+    usageTime: []
   }
   // save action data to store
   state.actions = {
@@ -97,4 +100,15 @@ export function ADD_TO_TODAY (state, payload) {
   if (state.todayActions.indexOf(payload['id']) === -1) {
     state.todayActions.push(payload['id'])
   }
+}
+
+export function REMOVE_FROM_TODAY (state, payload) {
+  var index = state.todayActions.indexOf(payload['id'])
+  if (index === -1) {
+    return false
+  }
+  var todoActions = state.todayActions.slice(0) // clone array
+  todoActions.splice(index, 1) // remove action
+  state.todayActions = todoActions
+  return true
 }

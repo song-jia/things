@@ -9,8 +9,7 @@
 <script>
   export default {
     data () {
-      return {
-      }
+      return {}
     },
     props: {
       icon: String,

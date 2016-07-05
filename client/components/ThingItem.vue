@@ -13,7 +13,7 @@
         </a>
         <i class="fa fa-flag" v-if="!!thing.priority" v-bind:class="priorityStyle"></i>
         <span class="title">{{ thing.title }}</span>
-        <a class="menu-button" v-show="hover" v-on:click="showMenuHandler"><i class="fa fa-ellipsis-h"></i></a>
+        <menu-button v-on:click="showMenuHandler"></menu-button>
       </div>
       <div class="toolbox" v-show="showMenu" :transition="expand">
         <a class="link" v-on:click="openNewActionEditor">
@@ -52,6 +52,7 @@
   import ThingEditor from './ThingEditor'
   import ActionEditor from './ActionEditor'
   import ActionItem from './ActionItem'
+  import MenuButton from './MenuButton'
 
   export default {
     data () {
@@ -83,7 +84,8 @@
     components: {
       ThingEditor,
       ActionEditor,
-      ActionItem
+      ActionItem,
+      MenuButton
     },
     methods: {
       /*
@@ -211,23 +213,6 @@
   .thing-item .title {
     display: inline-block;
     vertical-align: middle;
-  }
-  .thing-item .menu-button {
-    display: inline-block;
-    cursor: pointer;
-    width: 25px;
-    height: 25px;
-    background: none;
-    border: none;
-    font-size: 17px;
-    line-height: 2px;
-    color: #aaaaaa;
-    text-align: center;
-    vertical-align: middle;
-    float: right;
-  }
-  .thing-item .menu-button:hover {
-    color: #555555;
   }
   .thing-item .toolbox {
     width: 100%;

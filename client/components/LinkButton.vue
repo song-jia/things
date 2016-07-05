@@ -1,6 +1,6 @@
 <template>
   <a class="link"
-     v-bind:class="class" v-on:click="clickHandler">
+     v-bind:class="class">
     <i :class="iconClass" aria-hidden="true"></i>
     <slot></slot>
   </a>
@@ -15,11 +15,6 @@
     props: {
       icon: String,
       class: String
-    },
-    methods: {
-      clickHandler () {
-        this.$dispatch('click')
-      }
     },
     computed: {
       iconClass () {

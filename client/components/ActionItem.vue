@@ -3,7 +3,8 @@
     <div v-show="!editing">
       <div class="viewbox">
         <span class="title">{{ details.title }}</span>
-        <a class="menu-button" v-on:click="showMenuHandler"><i class="fa fa-ellipsis-h"></i></a>
+        <menu-button v-on:click="showMenuHandler">
+        </menu-button>
       </div>
       <div class="toolbox" v-show="showMenu" :transition="expand">
         <link-button @click="doItToday"
@@ -36,6 +37,7 @@
 <script>
   import ActionEditor from './ActionEditor'
   import LinkButton from './LinkButton'
+  import MenuButton from './MenuButton'
   import { removeAction, updateAction, addActionToToday } from '../vuex/actions'
 
   export default {
@@ -50,7 +52,8 @@
     },
     components: {
       ActionEditor,
-      LinkButton
+      LinkButton,
+      MenuButton
     },
     methods: {
       /*
@@ -125,20 +128,6 @@
   .action-item .title {
     display: inline-block;
     vertical-align: middle;
-  }
-  .action-item .menu-button {
-    display: inline-block;
-    cursor: pointer;
-    width: 25px;
-    height: 25px;
-    background: none;
-    border: none;
-    font-size: 17px;
-    line-height: 2px;
-    color: #aaaaaa;
-    text-align: center;
-    vertical-align: middle;
-    float: right;
   }
   .active {
     color: red;

@@ -24,16 +24,10 @@
   }
 </script>
 
-<style>
+<style scoped>
   .c-panel {
     padding: 10px;
     background-color: #ffffff;
     min-height: 100%;
-  }
-  .c-panel .new-link .icon {
-    display: inline-block;
-    margin-right: 8px;
-    font-size: 15px;
-    font-weight: 600;
   }
 </style>

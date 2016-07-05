@@ -92,3 +92,9 @@ export function UPDATE_ACTION (state, payload) {
   Object.assign(state.actions[payload.id], payload)
   state.actions = {...state.actions}
 }
+
+export function ADD_TO_TODAY (state, payload) {
+  if (state.todayActions.indexOf(payload['id']) === -1) {
+    state.todayActions.push(payload['id'])
+  }
+}

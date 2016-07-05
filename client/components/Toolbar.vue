@@ -15,8 +15,6 @@
 </template>
 
 <script>
-  import { todayActionsCount } from '../vuex/getters'
-
   export default {
     data () {
       return {}
@@ -26,7 +24,9 @@
     },
     vuex: {
       getters: {
-        todayActionsCount
+        todayActionsCount (state) {
+          return state.todayActions.length
+        }
       }
     }
   }

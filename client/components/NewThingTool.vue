@@ -1,8 +1,8 @@
 <template>
   <div class="tools" v-show="!editing">
-    <a v-on:click="showEditor" class="action-link new-link">
-      <i class="fa fa-plus" aria-hidden="true"></i> Add Thing
-    </a>
+    <link-button v-on:click="showEditor" icon="plus">
+      Add Thing
+    </link-button>
   </div>
   <thing-editor
     v-show="editing"
@@ -14,6 +14,7 @@
 <script>
   import { addNewThing } from '../vuex/actions'
   import ThingEditor from './ThingEditor'
+  import LinkButton from './LinkButton'
 
   export default {
     data () {
@@ -45,7 +46,8 @@
 
     },
     components: {
-      ThingEditor
+      ThingEditor,
+      LinkButton
     },
     vuex: {
       actions: {

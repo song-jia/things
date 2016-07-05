@@ -186,7 +186,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .thing-item {
     border-bottom: 1px solid #f0f0f0;
     padding: 2px 0;
@@ -236,14 +236,6 @@
     text-align: right;
     border-top: solid 1px #f0f0f0;
     position: relative;
-  }
-  .thing-item .toolbox .link {
-    padding: 5px;
-    display: inline-block;
-    cursor: pointer;
-  }
-  .thing-item .toolbox .link:hover {
-    text-decoration: underline;
   }
   .thing-item .toolbox .remove {
     color: #999999;

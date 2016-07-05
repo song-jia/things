@@ -9,12 +9,14 @@
     </div>
     <div class="button-group">
       <button v-on:click="saveHandler" class="pure-button">save</button>
-      <a v-on:click="cancelHandler" class="">cancel</a>
+      <link-button v-on:click="cancelHandler">cancel</link-button>
     </div>
   </div>
 </template>
 
 <script>
+  import LinkButton from './LinkButton'
+
   export default {
     data () {
       return {
@@ -23,6 +25,9 @@
         dueDate: '',
         showDatePicker: false
       }
+    },
+    components: {
+      LinkButton
     },
     props: {
       // default value of inputs
@@ -93,7 +98,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .thing-editor input {
     font-size: 13px;
     padding: 5px;

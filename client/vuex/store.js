@@ -7,7 +7,8 @@ Vue.use(Vuex)
 // init state of app
 const state = {
   things: {},
-  actions: {}
+  actions: {},
+  todayActions: []
 }
 
 export default new Vuex.Store({

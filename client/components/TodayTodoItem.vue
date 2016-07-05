@@ -8,15 +8,17 @@
         </a>
       </div>
       <div class="toolbox" v-show="showMenu" :transition="expand">
-        <a>start</a>
-        <a>pause</a>
-        <a>complete</a>
+        <link-button icon="play">start</link-button>
+        <link-button icon="pause">pause</link-button>
+        <link-button icon="check">complete</link-button>
       </div>
     </div>
   </li>
 </template>
 
 <script>
+  import LinkButton from './LinkButton'
+
   export default {
     data () {
       return {
@@ -28,6 +30,7 @@
       id: String
     },
     components: {
+      LinkButton
     },
     methods: {
       /*
@@ -57,7 +60,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .action-item .viewbox {
     padding: 5px 0;
   }

@@ -6,9 +6,23 @@
         <a class="menu-button" v-on:click="showMenuHandler"><i class="fa fa-ellipsis-h"></i></a>
       </div>
       <div class="toolbox" v-show="showMenu" :transition="expand">
-        <a class="link today" v-bind:class="{'active': this.isToday}" v-on:click="doItToday"><i class="fa fa-rocket"></i> today</a>
-        <a class="link" v-on:click="beginEditing"><i class="fa fa-pencil-square-o"></i> edit</a>
-        <a class="link remove" v-on:click="removeHandler"><i class="fa fa-trash-o"></i> remove</a>
+        <link-button @click="doItToday"
+                     :class="this.isToday ? 'active' : ''"
+                     icon="rocket"
+        >
+          today
+        </link-button>
+        <link-button @click="beginEditing"
+                     icon="pencil-square-o"
+        >
+          edit
+        </link-button>
+        <link-button @click="removeHandler"
+                     class="remove"
+                     icon="trash-o"
+        >
+          remove
+        </link-button>
       </div>
     </div>
     <action-editor
@@ -21,6 +35,7 @@
 
 <script>
   import ActionEditor from './ActionEditor'
+  import LinkButton from './LinkButton'
   import { removeAction, updateAction, addActionToToday } from '../vuex/actions'
 
   export default {
@@ -34,7 +49,8 @@
       id: String
     },
     components: {
-      ActionEditor
+      ActionEditor,
+      LinkButton
     },
     methods: {
       /*
@@ -81,15 +97,16 @@
         return this.actions[this.id]
       },
       isToday () {
-        var d = new Date()
-        var today = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-        return this.details['dueDate'] === today
+        return this.todayActions.indexOf(this.id) !== -1
       }
     },
     vuex: {
       getters: {
         actions (state) {
           return state.actions
+        },
+        todayActions (state) {
+          return state.todayActions
         }
       },
       actions: {
@@ -101,7 +118,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .action-item .viewbox {
     padding: 5px 0;
   }
@@ -123,7 +140,7 @@
     vertical-align: middle;
     float: right;
   }
-  .action-item .today.active {
+  .active {
     color: red;
     pointer-events: none;
   }

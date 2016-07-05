@@ -11,7 +11,6 @@
 
 <script>
 import TodayTodoItem from './TodayTodoItem'
-import { getTodayActions } from '../vuex/getters'
 
 export default {
   data () {
@@ -22,13 +21,15 @@ export default {
   },
   vuex: {
     getters: {
-      actions: getTodayActions
+      actions (state) {
+        return state.todayActions
+      }
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .today-panel {
   padding: 10px;
   background-color: white;

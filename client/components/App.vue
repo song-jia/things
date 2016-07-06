@@ -1,3 +1,5 @@
+<!--
+-->
 <template>
   <div id="app" class="app pure-g" v-on:click.capture="clickSomewhereHandler">
     <div class="pure-u-1-5">

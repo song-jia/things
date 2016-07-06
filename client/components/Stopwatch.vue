@@ -1,14 +1,15 @@
+<!--
+  count time and display time in format h : m : s.
+  automatically start counting when this compenent has been created.
+
+  properties:
+    startTime: default to current timestamp.
+-->
 <template>
   <span>{{ time }}</span>
 </template>
 
 <script>
-  /*
-   * count time and display time in format h : m : s.
-   * automatically start counting when this compenent has been created.
-   * properties:
-   * > startTime: default to current timestamp.
-   */
   export default {
     data () {
       return {

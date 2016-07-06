@@ -1,3 +1,25 @@
+<!--
+  initial state:
+    * display todo action.
+    * provide three buttons start, pause, complete.
+    * display the stopwatch if action is in status 'doing'.
+
+  displaying of three buttons:
+    * display start button when action is not started.
+    * display pause button when action is started.
+    * always display complete button.
+
+  actions of buttons:
+    * start
+      start counting time and display stopwatch.
+      mark the action as 'doing'.
+    * pause
+      stop counting time and mark the action as 'pause'.
+      save the usage time.
+    * complete:
+      make the action to be complete.
+      remove the action from today todo action list.
+-->
 <template>
   <li class="item">
     <div>
@@ -33,28 +55,6 @@
 </template>
 
 <script>
-  /*
-   * initial state:
-   * > display todo action.
-   * > provide three buttons start, pause, complete.
-   * > display the stopwatch if action is in status 'doing'.
-   *
-   * displaying of three buttons:
-   * > display start button when action is not started.
-   * > display pause button when action is started.
-   * > always display complete button.
-   *
-   * actions of buttons:
-   * > start
-   *   start counting time and display stopwatch.
-   *   mark the action as 'doing'.
-   * > pause
-   *   stop counting time and mark the action as 'pause'.
-   *   save the usage time.
-   * > complete:
-   *   make the action to be complete.
-   *   remove the action from today todo action list.
-   */
   import LinkButton from './LinkButton'
   import MenuButton from './MenuButton'
   import Stopwatch from './Stopwatch'

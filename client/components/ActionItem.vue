@@ -1,8 +1,14 @@
+<!--
+-->
 <template>
   <li class="action-item">
     <div v-show="!editing">
       <div class="viewbox">
-        <span class="title">{{ details.title }}</span>
+        <span class="title"
+              :class="{'complete': details.status === 'complete'}"
+        >
+          {{ details.title }}
+        </span>
         <menu-button v-on:click="showMenuHandler">
         </menu-button>
       </div>
@@ -128,6 +134,10 @@
   .action-item .title {
     display: inline-block;
     vertical-align: middle;
+  }
+  .action-item .title.complete {
+    color: gray;
+    text-decoration: line-through;
   }
   .active {
     color: red;

@@ -1,3 +1,6 @@
+<!--
+
+-->
 <template>
   <li class="thing-item"
     v-on:mouseover="mouseoverHandler"
@@ -6,24 +9,30 @@
     <div v-show="!editing">
       <div class="viewbox">
         <a v-show="hasAction" v-on:click="toggleShowActions" class="icon-button">
-          <i class="fa" v-bind:class="{'fa-caret-right': !showActions, 'fa-caret-down': showActions}"></i>
+          <i class="fa"
+             v-bind:class="{'fa-caret-right': !showActions, 'fa-caret-down': showActions}"
+          ></i>
         </a>
-        <i class="fa fa-flag" v-if="!!thing.priority" v-bind:class="priorityStyle"></i>
-        <span class="title">{{ thing.title }}</span>
+        <priority-flag v-if="!!thing.priority" :priority="thing.priority">
+        </priority-flag>
+        <span class="title" :class="{'complete': thing.complete}">
+          {{ thing.title }}
+        </span>
         <menu-button v-on:click="showMenuHandler"></menu-button>
       </div>
       <div class="toolbox" v-show="showMenu" :transition="expand">
-        <a class="link" v-on:click="openNewActionEditor">
-          <i class="fa fa-paper-plane" aria-hidden="true"></i> add action</a>
-        <a class="link" v-on:click="beginEditing"><i class="fa fa-pencil-square-o"></i> edit</a>
-        <a class="link" v-on:click="showPriorityList"><i class="fa fa-flag" v-bind:class="priorityStyle"></i> priority</a>
-        <a class="link remove" v-on:click="removeHandler"><i class="fa fa-trash-o"></i> remove</a>
-        <div class="priorities" v-show="showPriorities" id="priorities-list">
-          <a v-on:click="changePriority" data-id="1"><i class="fa fa-flag important-urgent"></i> important urgent</a>
-          <a v-on:click="changePriority" data-id="2"><i class="fa fa-flag important-not-urgent"></i> important not urgent</a>
-          <a v-on:click="changePriority" data-id="3"><i class="fa fa-flag not-important-urgent"></i> not important urgent</a>
-          <a v-on:click="changePriority" data-id="4"><i class="fa fa-flag not-important-not-urgent"></i> not important not urgent</a>
-        </div>
+        <link-button v-on:click="openNewActionEditor" icon="paper-plane">
+          add action
+        </link-button>
+        <link-button v-on:click="beginEditing" icon="pencil-square-o">
+          edit
+        </link-button>
+        <priority-selector :priority="thing.priority"
+                           @change="changePriority">
+        </priority-selector>
+        <link-button v-on:click="removeHandler" icon="trash-o" class="remove">
+          remove
+        </link-button>
       </div>
       <div class="action-area">
         <action-editor
@@ -49,7 +58,10 @@
   import ThingEditor from './ThingEditor'
   import ActionEditor from './ActionEditor'
   import ActionItem from './ActionItem'
+  import LinkButton from './LinkButton'
   import MenuButton from './MenuButton'
+  import PrioritySelector from './PrioritySelector'
+  import PriorityFlag from './PriorityFlag'
 
   export default {
     data () {
@@ -57,20 +69,11 @@
         hover: false,
         showMenu: false,
         editing: false,
-        showPriorities: false,
         showNewActionEditor: false,
         showActions: false
       }
     },
     computed: {
-      priorityStyle () {
-        return {
-          'important-urgent': this.thing.priority === '1',
-          'important-not-urgent': this.thing.priority === '2',
-          'not-important-urgent': this.thing.priority === '3',
-          'not-important-not-urgent': this.thing.priority === '4'
-        }
-      },
       hasAction () {
         return this.thing.actions.length > 0
       }
@@ -82,7 +85,10 @@
       ThingEditor,
       ActionEditor,
       ActionItem,
-      MenuButton
+      MenuButton,
+      LinkButton,
+      PrioritySelector,
+      PriorityFlag
     },
     methods: {
       /*
@@ -134,18 +140,6 @@
         this.updateThing(thing)
         this.editing = false
       },
-      showPriorityList () {
-        this.showPriorities = !this.showPriorities
-      },
-      changePriority (e) {
-        // update thing priority
-        this.updateThing({
-          id: this.thing.id,
-          priority: e.currentTarget.dataset.id
-        })
-        // close priorities list
-        this.showPriorities = false
-      },
       saveNewAction (data) {
         this.addNewAction({
           thingId: this.thing.id,
@@ -162,6 +156,13 @@
       },
       toggleShowActions () {
         this.showActions = !this.showActions
+      },
+      changePriority (pId) {
+        // update thing priority
+        this.updateThing({
+          id: this.thing.id,
+          priority: pId
+        })
       }
     },
     events: {
@@ -211,6 +212,10 @@
     display: inline-block;
     vertical-align: middle;
   }
+  .thing-item .title.complete {
+    color: gray;
+    text-decoration: line-through;
+  }
   .thing-item .toolbox {
     width: 100%;
     height: 100%;
@@ -219,43 +224,11 @@
     border-top: solid 1px #f0f0f0;
     position: relative;
   }
-  .thing-item .toolbox .remove {
+  .toolbox .remove {
     color: #999999;
   }
   .thing-item .viewbox {
     padding: 5px 0;
-  }
-  .priorities {
-    border: 1px solid #d6dadc;
-    box-shadow: 0 1px 6px rgba(0,0,0,.15);
-    padding: 5px;
-    width: 180px;
-    text-align: left;
-    position: absolute;
-    background-color: white;
-    right: 10px;
-  }
-  .priorities i {
-    font-size: 15px;
-  }
-  .priorities a {
-    display: block;
-    text-decoration: none;
-    margin-bottom: 3px;
-    color: #555555;
-    cursor: pointer;
-  }
- .important-urgent {
-    color: #eb5a46;
-  }
-  .important-not-urgent {
-    color: #0079bf;
-  }
-  .not-important-urgent {
-    color: #61bd4f;
-  }
-  .not-important-not-urgent {
-    color: #c377e0;
   }
   .action-area {
     padding-left: 20px;

@@ -1,11 +1,11 @@
-<template>
+<template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div class="thing-editor">
     <div>
       New Action:
     </div>
     <div class="pure-g">
       <input type="text" placeholder="" class="input-title pure-u-4-5"
-        value="{{ default.title }}" v-model="title" />
+        value="{{ title }}" v-model="title" />
       <input type="text" placeholder="due date" class="pure-u-1-5"
         v-on:focus="dueDateFocusHandler" v-on:blur="dueDateBlurHandler"
         v-model="dueDate" />
@@ -23,23 +23,21 @@
   export default {
     data () {
       return {
-        id: '',
-        title: '',
-        dueDate: '',
         showDatePicker: false
       }
     },
     props: {
-      // default value of inputs
-      default: {
-        type: Object,
-        default () {
-          return {
-            id: '',
-            title: '',
-            dueDate: ''
-          }
-        }
+      id: {
+        type: String,
+        default: ''
+      },
+      title: {
+        type: String,
+        default: ''
+      },
+      dueDate: {
+        type: String,
+        default: ''
       }
     },
     methods: {
@@ -91,9 +89,6 @@
       dueDateBlurHandler () {
         this.showDatePicker = false
       }
-    },
-    created () {
-      this.id = this.default.id
     }
   }
 </script>

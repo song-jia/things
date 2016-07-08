@@ -3,14 +3,14 @@
 -->
 <template>
   <li class="thing-item"
-    v-on:mouseover="mouseoverHandler"
-    v-on:mouseout="mouseoutHandler"
+    @mouseover="mouseoverHandler"
+    @mouseout="mouseoutHandler"
   >
     <div v-show="!editing">
       <div class="viewbox">
-        <a v-show="hasAction" v-on:click="toggleShowActions" class="icon-button">
+        <a v-show="hasAction" @click="toggleShowActions" class="icon-button">
           <i class="fa"
-             v-bind:class="{'fa-caret-right': !showActions, 'fa-caret-down': showActions}"
+             :class="{'fa-caret-right': !showActions, 'fa-caret-down': showActions}"
           ></i>
         </a>
         <priority-flag v-if="!!thing.priority" :priority="thing.priority">

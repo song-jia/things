@@ -33,7 +33,9 @@
       </div>
     </div>
     <action-editor
-      v-bind:default="details"
+      :id="details.id"
+      :title="details.title"
+      :dueDate="details.dueDate"
       v-if="editing"
       v-on:save="saveEditing"
       v-on:cancel="cancelEditing"></action-editor>

@@ -11,6 +11,8 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "koa": "^1.2.0",
+    "koa-route": "^2.4.2",
     "vue": "^1.0.18",
     "vue-router": "^0.7.13",
     "vuex": "^0.6.2"

@@ -11,8 +11,12 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "co-body": "^4.2.0",
+    "co-monk": "^1.0.0",
     "koa": "^1.2.0",
     "koa-jwt": "^1.2.0",
+    "koa-router": "^5.4.0",
+    "monk": "^3.0.4",
     "vue": "^1.0.18",
     "vue-router": "^0.7.13",
     "vuex": "^0.6.2"

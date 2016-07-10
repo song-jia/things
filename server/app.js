@@ -1,6 +1,5 @@
 var koa = require('koa')
-var jwt = require('koa-jwt')
-var config = require('./config')
+var router = require('./router')
 
 var app = koa()
 module.exports = app
@@ -17,9 +16,8 @@ app.use(function * (next) {
   }
 })
 
-app.use(jwt({ secret: config.JWT_KEY }))
-app.use(function * () {
-  this.body = 'hello'
-})
+app.use(router.routes())
+
+// app.use(jwt({ secret: config.JWT_KEY }))
 
 app.listen(4000)

@@ -2,7 +2,6 @@ var path = require('path')
 var app = require(path.join(__dirname, '../../../server/app'))
 var config = require(path.join(__dirname, '../../../server/config'))
 var jwt = require('koa-jwt')
-
 var request = require('supertest').agent(app.listen())
 
 describe('Basic Authentication', function () {

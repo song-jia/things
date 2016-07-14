@@ -11,6 +11,7 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "co-body": "^4.2.0",
     "co-monk": "^1.0.0",
     "koa": "^1.2.0",

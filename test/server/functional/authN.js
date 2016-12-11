@@ -1,12 +1,25 @@
-var path = require('path')
-var assert = require('assert')
-var app = require(path.join(__dirname, '../../../server/app'))
-var config = require(path.join(__dirname, '../../../server/config'))
-var jwt = require('koa-jwt')
-var request = require('supertest').agent(app.listen())
+process.env.NODE_ENV = 'test'
+const path = require('path')
+const assert = require('assert')
+const server = require(path.join(__dirname, '../../../server/server'))
+const request = require('supertest')(server)
+const db = require('../../../server/utils/db')
+const password = require('../../../server/utils/password')
+const users = db.get('users')
 
-describe('login API', function () {
-  describe('login with wrong user name', function () {
+describe('Authentication API', function () {
+  before(function (done) {
+    Promise.all([
+      users.drop(),
+      users.insert([
+        {name: 'test', password: password.encrypt('111111')}
+      ])
+    ]).then(function () {
+      done()
+    })
+  })
+
+  describe('authenticate with wrong user name', function () {
     it('should return 401 and \'user does not exist.\'', function (done) {
       request
         .post('/api/auth')
@@ -29,12 +42,13 @@ describe('login API', function () {
       request
         .post('/api/auth')
         .type('form')
-        .send({username: 'test', password: 'password'})
+        .send({username: 'test', password: '111111'})
         .expect(function (res) {
           assert.equal(res.body.status, 'success')
           assert.ok(res.body.token)
         })
-        .expect(200, done)
+        .expect(200)
+        .end(done)
     })
   })
 })

@@ -5,38 +5,53 @@
  * 该JWT永久失效。
  * 如果JWT无效则忽略请求。
 */
-var bodyParser = require('co-body')
-var config = require('../config')
-var jwt = require('koa-jwt')
-var userRepo = require('../repositories/user')
-var authModel = require('../models/auth')
+const bodyParser = require('co-body')
+const config = require('../config')
+const jwt = require('koa-jwt')
+const usersRepo = require('../repositories/users')
+const authModel = require('../models/auth')
+const password = require('../utils/password')
 
 /*
  * 登录处理：
  * 客户端需要通过POST方法发送username和password, 服务器端验证username和password。
- * 如果验证通过服务器返回JWT，其中包含过期时间和authID。
+ * 如果验证通过服务器返回JWT，其中包含过期时间和authID。同时在服务器端将本次登录记入历史。
  * 如果验证失败，返回401状态和错误信息。
 */
 module.exports.post = function * () {
-  var req = yield bodyParser.form(this)
-  var user = yield userRepo.findByName(req.username)
+  const req = yield bodyParser.form(this)
+  const user = yield usersRepo.findByName(req.username)
+  // user does not exist.
   if (user.length === 0) {
     this.status = 401
     this.body = 'user does not exist.'
-  } else if (user[0].password !== req.password) {
+    return
+  }
+
+  if (passwordIsWrong(req.password, user[0].password)) {
     this.status = 401
     this.body = 'password is not correct.'
-  } else {
-    var authID = authModel.newID(user.id)
-    this.status = 200
-    this.body = {
-      status: 'success',
-      token: jwt.sign(
-        {userID: user.id, authID: authID},
-        config.JWT_KEY
-      )
-    }
+    return
   }
+
+  const authId = yield authModel.saveLoginInfo(
+    user[0]._id,
+    {loginTime: Date.now(), device: req.device})
+  this.status = 200
+  this.body = {
+    status: 'success',
+    token: jwt.sign(
+      {authId: authId},
+      config.JWT_KEY
+    )
+  }
+}
+
+/**
+ * 校验请求中的密码是否和数据库中相等。
+ */
+function passwordIsWrong (raw, hash) {
+  return !password.compare(raw, hash)
 }
 
 module.exports.delete = function * () {

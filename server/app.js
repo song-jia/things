@@ -1,7 +1,8 @@
-var koa = require('koa')
-var router = require('./router')
+const koa = require('koa')
+const router = require('./router')
 
-var app = koa()
+const app = koa()
+
 module.exports = app
 
 app.use(function * (next) {
@@ -17,7 +18,3 @@ app.use(function * (next) {
 })
 
 app.use(router.routes())
-
-// app.use(jwt({ secret: config.JWT_KEY }))
-
-app.listen(4000)

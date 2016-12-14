@@ -1,13 +1,14 @@
-const koa = require('koa')
+const Koa = require('koa')
 const router = require('./router')
+const bodyParser = require('koa-bodyparser')
 
-const app = koa()
+const app = new Koa()
 
 module.exports = app
 
-app.use(function * (next) {
+app.use(async (ctx, next) => {
   try {
-    yield next
+    await next()
   } catch (err) {
     if (err.status === 401) {
       this.status = 401
@@ -17,4 +18,5 @@ app.use(function * (next) {
   }
 })
 
+app.use(bodyParser());
 app.use(router.routes())

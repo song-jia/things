@@ -5,7 +5,6 @@
  * 该JWT永久失效。
  * 如果JWT无效则忽略请求。
 */
-const bodyParser = require('co-body')
 const config = require('../config')
 const jwt = require('koa-jwt')
 const usersRepo = require('../repositories/users')
@@ -18,32 +17,30 @@ const password = require('../utils/password')
  * 如果验证通过服务器返回JWT，其中包含过期时间和authID。同时在服务器端将本次登录记入历史。
  * 如果验证失败，返回401状态和错误信息。
 */
-module.exports.post = function * () {
-  const req = yield bodyParser.form(this)
-  const user = yield usersRepo.findByName(req.username)
+module.exports.post = async (ctx) => {
+  const body = ctx.request.body
+  const user = await usersRepo.findByName(body.username)
   // user does not exist.
   if (user.length === 0) {
-    this.status = 401
-    this.body = 'user does not exist.'
-    return
-  }
-
-  if (passwordIsWrong(req.password, user[0].password)) {
-    this.status = 401
-    this.body = 'password is not correct.'
-    return
-  }
-
-  const authId = yield authModel.saveLoginInfo(
-    user[0]._id,
-    {loginTime: Date.now(), device: req.device})
-  this.status = 200
-  this.body = {
-    status: 'success',
-    token: jwt.sign(
-      {authId: authId},
-      config.JWT_KEY
-    )
+    ctx.status = 401
+    ctx.body = 'user does not exist.'
+  // password is wrong.
+  } else if (passwordIsWrong(body.password, user[0].password)) {
+    ctx.status = 401
+    ctx.body = 'password is not correct.'
+  // authN success, save auth record.
+  } else {
+    const authId = await authModel.saveLoginInfo(
+      user[0]._id,
+      {loginTime: Date.now(), device: body.device})
+    ctx.response.status = 200
+    ctx.response.body = {
+      status: 'success',
+      token: jwt.sign(
+        {authId: authId},
+        config.JWT_KEY
+      )
+    }
   }
 }
 
@@ -54,6 +51,5 @@ function passwordIsWrong (raw, hash) {
   return !password.compare(raw, hash)
 }
 
-module.exports.delete = function * () {
-
+module.exports.delete = () => {
 }

@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 const auth = require('./controllers/auth')
 
-router.get('/', function * () {
+router.get('/', () => {
   this.body = 'welcome'
 })
 // 验证接口，功能：

@@ -2,12 +2,11 @@
  * 使用用户名查询用户信息。
  */
 const monk = require('monk')
-const wrap = require('co-monk')
 const db = require('../utils/db')
-const users = wrap(db.get('users'))
+const users = db.get('users')
 
-module.exports.findByName = function * (name) {
-  return yield users.find({name: name})
+module.exports.findByName = async (name) => {
+  return await users.find({name: name})
 }
 
 /**
@@ -15,13 +14,13 @@ module.exports.findByName = function * (name) {
  * @param loginInfo Object {loginTime: time string, device: device name}
  * @returns ObjectId
  */
-module.exports.addLoginRecord = function * (userId, loginInfo) {
+module.exports.addLoginRecord = async (userId, loginInfo) => {
   const authNID = monk.id()
   let loginRecord = Object.assign(
     {authNID: authNID},
     loginInfo
   )
-  yield users.update(
+  await users.update(
     {_id: userId},
     {
       $push: {

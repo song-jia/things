@@ -1,4 +1,3 @@
-process.env.NODE_ENV = 'test'
 const path = require('path')
 const assert = require('assert')
 const server = require(path.join(__dirname, '../../../server/server'))

@@ -11,8 +11,8 @@
     "build": "node build/build.js",
     "unit": "karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
-    "test": "npm run unit && npm run e2e",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha test/server/* -u exports -R"
+    "test": "cross-env NODE_ENV=test mocha test/server/*",
+    "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --report-dir=test/coverage/ mocha test/server/*"
   },
   "dependencies": {
     "babel-preset-es2017": "^6.16.0",
@@ -37,6 +37,7 @@
     "chai": "^3.5.0",
     "chromedriver": "^2.21.2",
     "connect-history-api-fallback": "^1.1.0",
+    "cross-env": "^3.1.3",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.26.1",
     "eslint": "^3.11.1",
@@ -68,6 +69,7 @@
     "lolex": "^1.4.0",
     "mocha": "^3.2.0",
     "nightwatch": "^0.9.9",
+    "nyc": "^10.0.0",
     "ora": "^0.3.0",
     "phantomjs-prebuilt": "^2.1.3",
     "selenium-server": "3.0.1",

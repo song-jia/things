@@ -43,11 +43,11 @@ describe('Authentication API', function () {
         .post('/api/auth')
         .type('form')
         .send({username: 'test', password: '111111'})
+        .expect(200)
         .expect(function (res) {
           assert.equal(res.body.status, 'success')
           assert.ok(res.body.token)
         })
-        .expect(200)
         .end(done)
     })
   })

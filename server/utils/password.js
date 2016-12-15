@@ -1,7 +1,7 @@
 /*
  * 用于加密密码字符串。
  */
-var bcrypt = require('bcrypt-nodejs')
+const bcrypt = require('bcrypt-nodejs')
 /*
  * 使用bcrypt-nodejs加密密码字符串。
  */

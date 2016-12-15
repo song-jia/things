@@ -37,8 +37,9 @@ module.exports.auth = async (ctx) => {
     ctx.response.body = {
       status: 'success',
       token: jwt.sign(
-        {authId: authId},
-        config.JWT_KEY
+        {user: user[0].name, authID: authId},
+        config.JWT_KEY,
+        {expiresIn: '1d'}
       )
     }
   }
@@ -47,7 +48,8 @@ module.exports.auth = async (ctx) => {
 /*
  * 退出处理
  */
-module.exports.logout = (ctx) => {
+module.exports.logout = async (ctx) => {
+  await usersRepo.removeLoginRecord(ctx.state.user.user, ctx.state.user.authID)
   ctx.status = 200
   ctx.body = 'logout success.'
 }

@@ -38,8 +38,8 @@ describe('Authentication API', function () {
     })
   })
   describe('login with correct user name and password', function () {
-    it('should return success status and authorization token.', function (done) {
-      request
+    it('should return success status and authorization token.', function () {
+      return request
         .post('/api/auth')
         .type('form')
         .send({username: 'test', password: '111111'})
@@ -47,12 +47,13 @@ describe('Authentication API', function () {
         .expect(function (res) {
           assert.equal(res.body.status, 'success')
           assert.ok(res.body.token)
+          let payload = jwt.verify(res.body.token, config.JWT_KEY)
+          assert.equal('test', payload.user)
           users.findOne({name: 'test'})
             .then(function (user) {
               assert.equal(user['loginRecord'].length, 1)
             })
         })
-        .end(done)
     })
   })
   describe('logout', function () {
@@ -61,13 +62,13 @@ describe('Authentication API', function () {
         {name: 'test'},
         {
           $push: {
-            loginRecord: {authNID: ''}
+            loginRecord: {id: 'auth_id_1'}
           }
         }
       )
     })
     it('should clear login record and return \'logout success.\'', function () {
-      let token = jwt.sign({user: 'test'}, config.JWT_KEY, {expiresIn: '1h'})
+      let token = jwt.sign({user: 'test', authID: 'auth_id_1'}, config.JWT_KEY, {expiresIn: '1h'})
       return request
         .delete('/api/auth')
         .set({
@@ -78,9 +79,14 @@ describe('Authentication API', function () {
           assert.equal(res.text, 'logout success.')
           return users.findOne({name: 'test'})
             .then(function (user) {
-              assert.equal(0, user['loginRecord'].length)
+              assert.equal(user['loginRecord'].length, 0)
             })
         })
+    })
+  })
+  describe('authorization check', function () {
+    it('should failed when jwt cannot be found in user\'s login record.', function () {
+      throw {error: 'pending'}
     })
   })
 })

@@ -17,7 +17,7 @@ module.exports.findByName = async (name) => {
 module.exports.addLoginRecord = async (userId, loginInfo) => {
   const authNID = monk.id()
   let loginRecord = Object.assign(
-    {authNID: authNID},
+    {id: authNID},
     loginInfo
   )
   await users.update(
@@ -29,4 +29,13 @@ module.exports.addLoginRecord = async (userId, loginInfo) => {
     }
   )
   return authNID
+}
+
+module.exports.removeLoginRecord = (name, authID) => {
+  return users.update(
+    {name: name},
+    {
+      $pull: {loginRecord: {id: authID}}
+    }
+  )
 }

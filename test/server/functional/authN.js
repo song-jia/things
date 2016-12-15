@@ -6,17 +6,17 @@ const request = require('supertest')(server)
 const db = require('../../../server/utils/db')
 const password = require('../../../server/utils/password')
 const users = db.get('users')
+const jwt = require('koa-jwt')
+const config = require('../../../server/config')
 
 describe('Authentication API', function () {
-  before(function (done) {
-    Promise.all([
+  beforeEach(function () {
+    return Promise.all([
       users.drop(),
       users.insert([
         {name: 'test', password: password.encrypt('111111')}
       ])
-    ]).then(function () {
-      done()
-    })
+    ])
   })
 
   describe('authenticate with wrong user name', function () {
@@ -47,8 +47,40 @@ describe('Authentication API', function () {
         .expect(function (res) {
           assert.equal(res.body.status, 'success')
           assert.ok(res.body.token)
+          users.findOne({name: 'test'})
+            .then(function (user) {
+              assert.equal(user['loginRecord'].length, 1)
+            })
         })
         .end(done)
+    })
+  })
+  describe('logout', function () {
+    beforeEach(function () {
+      return users.update(
+        {name: 'test'},
+        {
+          $push: {
+            loginRecord: {authNID: ''}
+          }
+        }
+      )
+    })
+    it('should clear login record and return \'logout success.\'', function () {
+      let token = jwt.sign({user: 'test'}, config.JWT_KEY, {expiresIn: '1h'})
+      return request
+        .delete('/api/auth')
+        .set({
+          Authorization: `Bearer ${token}`
+        })
+        .then(function (res) {
+          assert.equal(200, res.status)
+          assert.equal(res.text, 'logout success.')
+          return users.findOne({name: 'test'})
+            .then(function (user) {
+              assert.equal(0, user['loginRecord'].length)
+            })
+        })
     })
   })
 })

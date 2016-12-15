@@ -1,11 +1,17 @@
-const router = require('koa-router')()
+const router = require('koa-router')
 const auth = require('./controllers/auth')
 
-router.get('/', () => {
-  this.body = 'welcome'
+const protectedAPI = router()
+const unprotected = router()
+
+unprotected.get('/', (ctx) => {
+  ctx.body = 'APP homepage.'
 })
 // 验证接口，功能：
 // 用户名，密码验证。
-router.post('/api/auth', auth.post)
+unprotected.post('/api/auth', auth.auth)
 
-module.exports = router
+// 退出
+protectedAPI.del('/api/auth', auth.logout)
+module.exports.protected = protectedAPI
+module.exports.unprotected = unprotected

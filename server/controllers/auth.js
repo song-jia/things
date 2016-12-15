@@ -17,7 +17,7 @@ const password = require('../utils/password')
  * 如果验证通过服务器返回JWT，其中包含过期时间和authID。同时在服务器端将本次登录记入历史。
  * 如果验证失败，返回401状态和错误信息。
 */
-module.exports.post = async (ctx) => {
+module.exports.auth = async (ctx) => {
   const body = ctx.request.body
   const user = await usersRepo.findByName(body.username)
   // user does not exist.
@@ -44,6 +44,14 @@ module.exports.post = async (ctx) => {
   }
 }
 
+/*
+ * 退出处理
+ */
+module.exports.logout = (ctx) => {
+  ctx.status = 200
+  ctx.body = 'logout success.'
+}
+
 /**
  * 校验请求中的密码是否和数据库中相等。
  */
@@ -51,5 +59,3 @@ function passwordIsWrong (raw, hash) {
   return !password.compare(raw, hash)
 }
 
-module.exports.delete = () => {
-}

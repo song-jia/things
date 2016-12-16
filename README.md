@@ -1,5 +1,8 @@
 # things
 
+[![Build Status](https://travis-ci.org/song-jia/things.svg?branch=20)](https://travis-ci.org/song-jia/things)
+[![codecov](https://codecov.io/gh/song-jia/things/branch/master/graph/badge.svg)](https://codecov.io/gh/song-jia/things)
+
 > A GTD Tool
 
 ## Build Setup

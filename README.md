@@ -23,9 +23,9 @@ npm run unit
 # run e2e tests
 npm run e2e
 
-# run all tests
+# 运行测试
 npm test
+
+# 生成code coverage报告到文件夹test/coverage
+npm coverage
 ```
-
-
-For detailed explanation on how things work, checkout the [guide](https://github.com/vuejs-templates/webpack#vue-webpack-boilerplate) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

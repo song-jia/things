@@ -12,7 +12,8 @@
     "unit": "karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "cross-env NODE_ENV=test nyc mocha --harmony-async-await test/server/**/*.js",
-    "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "coverage": "nyc report --reporter=lcov"
   },
   "dependencies": {
     "babel-preset-es2017": "^6.16.0",
@@ -99,6 +100,7 @@
     "exclude": [
       "server/config.js"
     ],
+    "report-dir": "./test/coverage",
     "all": true,
     "cache": false
   }

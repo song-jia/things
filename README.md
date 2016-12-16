@@ -1,5 +1,8 @@
 # things
 
+[![Build Status](https://travis-ci.org/song-jia/things.svg?branch=20)](https://travis-ci.org/song-jia/things)
+[![codecov](https://codecov.io/gh/song-jia/things/branch/master/graph/badge.svg)](https://codecov.io/gh/song-jia/things)
+
 > A GTD Tool
 
 ## Build Setup
@@ -20,8 +23,9 @@ npm run unit
 # run e2e tests
 npm run e2e
 
-# run all tests
+# 运行测试
 npm test
-```
 
-For detailed explanation on how things work, checkout the [guide](https://github.com/vuejs-templates/webpack#vue-webpack-boilerplate) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# 生成code coverage报告到文件夹test/coverage
+npm coverage
+```

@@ -1,9 +1,13 @@
-var password = require('../server/utils/password')
-var db = require('monk')('localhost/things')
-var users = db.get('users')
+const password = require('../server/utils/password')
+const db = require('../server/utils/db')
+const users = db.get('users')
+
+users.findOne({name: 'text'}).then(function (user) {
+ console.log(user)
+})
+
 Promise.all([
-  users
-    .drop() // 删除users collection
+  users.drop() // 删除users collection
     .then(function () { // 添加user documents
       return users.insert(
         [

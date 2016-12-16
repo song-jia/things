@@ -39,3 +39,7 @@ module.exports.removeLoginRecord = (name, authID) => {
     }
   )
 }
+
+module.exports.getUserByLoginID = (name, authID) => {
+  return users.findOne({name: name, loginRecord:{id: authID}})
+}

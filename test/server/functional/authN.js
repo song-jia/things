@@ -10,31 +10,32 @@ const jwt = require('koa-jwt')
 const config = require('../../../server/config')
 
 describe('Authentication API', function () {
+
   beforeEach(function () {
-    return Promise.all([
-      users.drop(),
-      users.insert([
-        {name: 'test', password: password.encrypt('111111')}
-      ])
-    ])
+    return users.drop()
+      .then(function () {
+        return users.insert([
+          {name: 'test', password: password.encrypt('111111')}
+        ])
+      })
   })
 
   describe('authenticate with wrong user name', function () {
-    it('should return 401 and \'user does not exist.\'', function (done) {
-      request
+    it('should return 401 and \'user does not exist.\'', function () {
+      return request
         .post('/api/auth')
         .type('form')
         .send({username: 'wrong user', password: 'password'})
-        .expect(401, 'user does not exist.', done)
+        .expect(401, 'user does not exist.')
     })
   })
   describe('login with wrong password', function () {
-    it('should return 401 and \'password is not correct.\'', function (done) {
-      request
+    it('should return 401 and \'password is not correct.\'', function () {
+      return request
         .post('/api/auth')
         .type('form')
         .send({username: 'test', password: 'wrong password'})
-        .expect(401, 'password is not correct.', done)
+        .expect(401, 'password is not correct.')
     })
   })
   describe('login with correct user name and password', function () {
@@ -86,7 +87,16 @@ describe('Authentication API', function () {
   })
   describe('authorization check', function () {
     it('should failed when jwt cannot be found in user\'s login record.', function () {
-      throw {error: 'pending'}
+      let token = jwt.sign({user: 'test', authID: 'auth_id_1'}, config.JWT_KEY, {expiresIn: '1h'})
+      return request
+        .delete('/api/auth')
+        .set({
+          Authorization: `Bearer ${token}`
+        })
+        .then(function (res) {
+          assert.equal(401, res.status)
+          assert.equal(res.text, 'permission denied.')
+        })
     })
   })
 })

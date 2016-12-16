@@ -54,6 +54,14 @@ module.exports.logout = async (ctx) => {
   ctx.body = 'logout success.'
 }
 
+module.exports.checkToken = async (ctx, next) => {
+  let user = await usersRepo.getUserByLoginID(ctx.state.user.user, ctx.state.user.authID)
+  if (user === null) {
+    throw {status: 401}
+  }
+  await next()
+}
+
 /**
  * 校验请求中的密码是否和数据库中相等。
  */

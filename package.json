@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "A GTD Tool",
   "engines": {
-    "node": "7"
+    "node": ">=7"
   },
   "author": "songjia.happycoding@gmail.com",
   "scripts": {
@@ -16,15 +16,16 @@
     "coverage": "nyc report --reporter=lcov"
   },
   "dependencies": {
-    "babel-preset-es2017": "^6.16.0",
-    "babel-register": "^6.18.0",
     "bcrypt-nodejs": "0.0.3",
     "koa": "^2.0.0",
     "koa-bodyparser": "^3.2.0",
     "koa-convert": "^1.2.0",
     "koa-jwt": "^1.2.0",
     "koa-router": "^7.0.1",
-    "monk": "^3.0.4"
+    "monk": "^3.0.4",
+    "react": "^15.4.1",
+    "react-router": "^3.0.0",
+    "redux": "^3.6.0"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

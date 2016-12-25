@@ -14,7 +14,7 @@ class AppContainer extends Component {
     return (
       <Provider store={store}>
         <div style={{ height: '100%' }}>
-          <Router history={browserHistory} children={routes} />
+          <Router history={browserHistory} routes={routes} />
         </div>
       </Provider>
     )
@@ -22,7 +22,9 @@ class AppContainer extends Component {
 }
 
 AppContainer.propTypes = {
-  routes: PropTypes.object.isRequired,
+  routes: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array]).isRequired,
   store: PropTypes.object.isRequired
 }
 

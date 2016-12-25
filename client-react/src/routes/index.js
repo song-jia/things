@@ -1,19 +1,31 @@
 // We only need to import the modules necessary for initial render
 import CoreLayout from '../layouts/CoreLayout/CoreLayout'
-import Home from './Home'
-import CounterRoute from './Counter'
+import Login from './Login'
+import Inbox from './Inbox'
+import Actions from './Actions'
+import Projects from './Projects'
+import Tags from './Tags'
 
-/*  Note: Instead of using JSX, we recommend using react-router
-    PlainRoute objects to build route definitions.   */
-
-export const createRoutes = (store) => ({
-  path        : '/',
-  component   : CoreLayout,
-  indexRoute  : Home,
-  childRoutes : [
-    CounterRoute(store)
-  ]
-})
+/*
+ * 使用Plain Routes配置react-router.
+ * 参考：https://github.com/ReactTraining/react-router/blob/master/docs/guides/RouteConfiguration.md#configuration-with-plain-routes
+ */
+export const createRoutes = (store) => ([
+  {
+    path: '/',
+    component: CoreLayout,
+    indexRoute: Inbox,
+    childRoutes: [
+      Actions,
+      Projects,
+      Tags
+    ]
+  },
+  {
+    path: '/login',
+    component: Login
+  }
+])
 
 /*  Note: childRoutes can be chunked or otherwise loaded programmatically
     using getChildRoutes with the following signature:

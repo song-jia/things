@@ -134,7 +134,8 @@ webpackConfig.module.loaders = [{
 // ------------------------------------
 // We use cssnano with the postcss loader, so we tell
 // css-loader not to duplicate minimization.
-const BASE_CSS_LOADER = 'css?sourceMap&-minimize'
+// 使用[name]---[local]---[hash:base64:5]命名local css选择器。
+const BASE_CSS_LOADER = 'css?sourceMap&-minimize&localIdentName=[name]---[local]---[hash:base64:5]'
 
 webpackConfig.module.loaders.push({
   test: /\.scss$/,
@@ -148,7 +149,7 @@ webpackConfig.module.loaders.push({
 })
 webpackConfig.module.loaders.push({
   test: /\.css$/,
-  exclude: null,
+  exclude: /antd\..*$/,
   loaders: [
     'style',
     BASE_CSS_LOADER,

@@ -1,9 +1,6 @@
-import React from 'react'
+import LoginForm from './components/LoginForm'
 
-const Login = () => (
-  <div>
-    <h1>Login Form</h1>
-  </div>
-)
-
-export default Login
+export default {
+  path: '/login',
+  component: LoginForm
+}

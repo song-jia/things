@@ -1,0 +1,11 @@
+:local(.section) {
+  border: 1px solid lightgrey;
+  padding: 25px;
+  border-radius: 5px;
+}
+:local(.title) {
+  margin-bottom: 20px;
+}
+:local(.content) {
+  height: 100%;
+}

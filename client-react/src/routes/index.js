@@ -1,8 +1,8 @@
 // We only need to import the modules necessary for initial render
-import CoreLayout from '../layouts/CoreLayout/CoreLayout'
-import Login from './Login'
-import Inbox from './Inbox'
 import Actions from './Actions'
+import CoreLayout from '../layouts/CoreLayout/CoreLayout'
+import Inbox from './Inbox'
+import Login from './Login'
 import Projects from './Projects'
 import Tags from './Tags'
 
@@ -21,10 +21,7 @@ export const createRoutes = (store) => ([
       Tags
     ]
   },
-  {
-    path: '/login',
-    component: Login
-  }
+  Login
 ])
 
 /*  Note: childRoutes can be chunked or otherwise loaded programmatically

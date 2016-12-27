@@ -4,9 +4,11 @@ const webpack = require('webpack')
 const webpackConfig = require('../config/webpack.config')
 const project = require('../config/project.config')
 const compress = require('compression')
+var proxy = require('http-proxy-middleware')
 
 const app = express()
 
+app.use('/api', proxy({target: 'http://localhost:5000', changeOrigin: true}))
 // This rewrites all routes requests to the root /index.html file
 // (ignoring file requests). If you want to implement universal
 // rendering, you'll want to remove this middleware.

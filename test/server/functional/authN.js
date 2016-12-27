@@ -10,7 +10,6 @@ const jwt = require('koa-jwt')
 const config = require('../../../server/config')
 
 describe('Authentication API', function () {
-
   beforeEach(function () {
     return users.drop()
       .then(function () {
@@ -21,21 +20,21 @@ describe('Authentication API', function () {
   })
 
   describe('authenticate with wrong user name', function () {
-    it('should return 401 and \'user does not exist.\'', function () {
+    it('should return 200 and \'user does not exist.\'', function () {
       return request
         .post('/api/auth')
         .type('form')
-        .send({username: 'wrong user', password: 'password'})
-        .expect(401, 'user does not exist.')
+        .send({id: 'wrong user', password: 'password'})
+        .expect(200, {status: 'error', error: '101', errorMessage: 'user does not exist.'})
     })
   })
   describe('login with wrong password', function () {
-    it('should return 401 and \'password is not correct.\'', function () {
+    it('should return 200 and \'password is not correct.\'', function () {
       return request
         .post('/api/auth')
         .type('form')
-        .send({username: 'test', password: 'wrong password'})
-        .expect(401, 'password is not correct.')
+        .send({id: 'test', password: 'wrong password'})
+        .expect(200, {status: 'error', error: '102', errorMessage: 'password is not correct.'})
     })
   })
   describe('login with correct user name and password', function () {
@@ -43,7 +42,7 @@ describe('Authentication API', function () {
       return request
         .post('/api/auth')
         .type('form')
-        .send({username: 'test', password: '111111'})
+        .send({id: 'test', password: '111111'})
         .expect(200)
         .expect(function (res) {
           assert.equal(res.body.status, 'success')

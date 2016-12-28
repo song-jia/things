@@ -1,5 +1,5 @@
 const assert = require('chai').assert
-const password = require('../../../../server/utils/password')
+const password = require('../../../utils/password')
 
 describe('password util', function () {
   describe('encrypt method', function () {

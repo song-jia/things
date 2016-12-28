@@ -60,7 +60,7 @@ const config = {
   // ----------------------------------
   coverage_reporters : [
     { type : 'text-summary' },
-    { type : 'lcov', dir : 'coverage' }
+    { type : 'lcov', dir : 'tests/coverage' }
   ]
 }
 

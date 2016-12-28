@@ -3,11 +3,11 @@ const path = require('path')
 const assert = require('assert')
 const server = require(path.join(__dirname, '../../../server/server'))
 const request = require('supertest')(server)
-const db = require('../../../server/utils/db')
-const password = require('../../../server/utils/password')
+const db = require('../../utils/db')
+const password = require('../../utils/password')
 const users = db.get('users')
 const jwt = require('koa-jwt')
-const config = require('../../../server/config')
+const config = require('../../config')
 
 describe('Authentication API', function () {
   beforeEach(function () {

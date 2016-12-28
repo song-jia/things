@@ -1,11 +1,13 @@
 import fetch from 'isomorphic-fetch'
 import queryString from 'query-string'
+import {browserHistory} from 'react-router'
 // =========================
 // constants
 // =========================
 const AUTH_SUCCESS = 'AUTH_SUCCESS'
 const AUTH_FAILED = 'AUTH_FAILED'
 const FETCHING = 'FETCHING'
+const LOGOUT = 'LOGOUT'
 // =========================
 // actions
 // =========================
@@ -27,6 +29,7 @@ export const authenticate = (id, password) => {
         return res.json().then((ctx) => {
           if (ctx.status === 'success') {
             dispatch(authSuccess(id, ctx.token))
+            browserHistory.push('/')
           } else if (ctx.error === '101') {
             dispatch(authFailed('用户不存在。'))
           } else if (ctx.error === '102') {
@@ -71,6 +74,15 @@ export const authFailed = (error) => {
     payload: {error}
   }
 }
+/**
+ * 退出。
+ */
+export const logout = () => {
+  return {
+    type: LOGOUT,
+    payload: null
+  }
+}
 
 // =========================
 // Reducer
@@ -82,24 +94,52 @@ const initialState = {
   fetching: false,
   error: ''
 }
-export default function authenticationReducer (state = initialState, action) {
+
+function getInitState () {
+  if (sessionStorage.getItem('auth')) {
+    return JSON.parse(sessionStorage.getItem('auth'))
+  }
+  return initialState
+}
+
+export default function authenticationReducer (state = getInitState(), action) {
   switch (action.type) {
     case FETCHING:
-      return Object.assign(
+      state = Object.assign(
         {},
         state,
         {fetching: true, error: ''})
+      break
     case AUTH_SUCCESS:
-      return Object.assign(
+      state = Object.assign(
         {},
         state,
         {token: action.payload.token, user: action.payload.user, fetching: false})
+      saveAuthState(state)
+      break
     case AUTH_FAILED:
-      return Object.assign(
+      state = Object.assign(
         {},
         state,
         {failed: true, error: action.payload.error, fetching: false})
-    default:
-      return state
+      break
+    case LOGOUT:
+      state = Object.assign(
+        {},
+        initialState
+      )
+      clearAuthState()
+      break
   }
+  return state
+}
+/**
+ * 把登录状态存到SessionStorage中，登录状态在当前session有效。
+ */
+function saveAuthState (state) {
+  sessionStorage.setItem('auth', JSON.stringify(state))
+}
+
+function clearAuthState () {
+  sessionStorage.removeItem('auth')
 }

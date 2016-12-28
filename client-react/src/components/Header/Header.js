@@ -1,13 +1,16 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { IndexLink, Link } from 'react-router'
 import './Header.scss'
 
-export const Header = () => (
+export const Header = (props) => (
   <div>
     <h1>Things</h1>
-    <Link to='/login' activeClassName='route--active'>
-      Login
-    </Link>
+    {
+      props.loggedIn
+        ? <Link to='/logout' activeClassName='route--active'>退出</Link>
+        : <Link to='/login' activeClassName='route--active'>登录</Link>
+    }
     {' · '}
     <IndexLink to='/' activeClassName='route--active'>
       Inbox
@@ -27,4 +30,11 @@ export const Header = () => (
   </div>
 )
 
-export default Header
+Header.propTypes = {
+  loggedIn: React.PropTypes.bool
+}
+
+const mapStateToProps = (store) => ({
+  loggedIn: !!store.authentication.token
+})
+export default connect(mapStateToProps)(Header)

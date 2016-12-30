@@ -1,6 +1,6 @@
 const argv = require('yargs').argv
-const project = require('./project.config')
-const webpackConfig = require('./webpack.config')
+const project = require('./project.config.js')
+const webpackConfig = require('./webpack.config.js')
 const debug = require('debug')('app:config:karma')
 
 debug('Creating configuration.')
@@ -52,8 +52,11 @@ const karmaConfig = {
   webpackMiddleware : {
     noInfo : true
   },
-  coverageReporter : {
-    reporters : project.coverage_reporters
+  coverageReporter: {
+    reporters: [
+      { type: 'text-summary' },
+      { type: 'lcov', dir: '../coverage/client-react' }
+    ]
   }
 }
 

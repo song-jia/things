@@ -5,6 +5,5 @@ node_modules/
 dist/
 npm-debug.log
 selenium-debug.log
-server/tests/coverage
-client-react/tests/coverage
+coverage
 .nyc_output

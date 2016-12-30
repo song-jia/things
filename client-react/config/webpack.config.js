@@ -5,7 +5,7 @@ const cssnano = require('cssnano')
 // 用于生成一个简单的html文件引用打包后的js
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const project = require('./project.config')
+const project = require('./project.config.js')
 const debug = require('debug')('app:config:webpack')
 
 const __DEV__ = project.globals.__DEV__

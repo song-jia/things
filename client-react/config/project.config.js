@@ -36,7 +36,7 @@ const config = {
       'transform-runtime',
       ['import', { 'libraryName': 'antd', 'style': 'css' }]
     ],
-    presets        : ['latest', 'react'] //, 'stage-0'
+    presets        : ['latest', 'react']
   },
   compiler_devtool         : 'source-map',
   compiler_hash_type       : 'hash',
@@ -53,14 +53,6 @@ const config = {
     'react-redux',
     'react-router',
     'redux'
-  ],
-
-  // ----------------------------------
-  // Test Configuration
-  // ----------------------------------
-  coverage_reporters : [
-    { type : 'text-summary' },
-    { type : 'lcov', dir : 'tests/coverage' }
   ]
 }
 
@@ -124,7 +116,7 @@ config.paths = {
 // Environment Configuration
 // ========================================================
 debug(`Looking for environment overrides for NODE_ENV "${config.env}".`)
-const environments = require('./environments.config')
+const environments = require('./environments.config.js')
 const overrides = environments[config.env]
 if (overrides) {
   debug('Found overrides, applying to default configuration.')

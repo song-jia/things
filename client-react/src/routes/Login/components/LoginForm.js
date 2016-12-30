@@ -32,26 +32,30 @@ class LoginForm extends Component {
         <Col xs={2} sm={4} md={6} lg={8} className={styles.section}>
           <h1 className={styles.title}>Things</h1>
           <div className={styles.noticeBox}>
-          {
+            {
             this.props.authError
               ? <Alert message={this.props.authError} type='error' showIcon />
               : ''
-          }
+            }
           </div>
           <Form onSubmit={(e) => this.handleSubmit(e)}>
             <FormItem
+              className='userGroup'
               validateStatus={this.state.userError ? 'error' : ''}
               help={this.state.userError ? '请输入用户名。' : ''}>
               <Input
+                id='user'
                 addonBefore={<Icon type='user' />}
                 placeholder='用户名'
                 value={this.state.user}
                 onChange={(e) => this.setState({user: e.target.value})} />
             </FormItem>
             <FormItem
+              className='passwordGroup'
               validateStatus={this.state.passwordError ? 'error' : ''}
               help={this.state.passwordError ? '请输入密码。' : ''}>
               <Input
+                id='password'
                 addonBefore={<Icon type='lock' />}
                 type='password'
                 placeholder='密码'

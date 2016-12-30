@@ -13,19 +13,19 @@ export const Header = (props) => (
     }
     {' · '}
     <IndexLink to='/' activeClassName='route--active'>
-      Inbox
+      工作篮
     </IndexLink>
     {' · '}
     <Link to='/actions' activeClassName='route--active'>
-      Actions
+      下一步行动
     </Link>
     {' · '}
     <Link to='/projects' activeClassName='route--active'>
-      Projects
+      项目
     </Link>
     {' · '}
     <Link to='/tags' activeClassName='route--active'>
-      Tags
+      标签
     </Link>
   </div>
 )

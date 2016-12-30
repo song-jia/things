@@ -103,6 +103,9 @@ function getInitState () {
 }
 
 export default function authenticationReducer (state = getInitState(), action) {
+  if (!action) {
+    return state
+  }
   switch (action.type) {
     case FETCHING:
       state = Object.assign(

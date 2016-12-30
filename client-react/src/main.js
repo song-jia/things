@@ -1,3 +1,4 @@
+require('babel-runtime/core-js/promise').default = require('bluebird')
 import React from 'react'
 import ReactDOM from 'react-dom'
 import createStore from './store/createStore'

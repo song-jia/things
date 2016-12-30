@@ -61,10 +61,9 @@ describe('(Internal Module) Location', () => {
         location : locationReducer(undefined, {})
       }
       _dispatchSpy = sinon.spy((action) => {
-        _globalState = {
-          ..._globalState,
+        _globalState = Object.assign({}, _globalState, {
           location : locationReducer(_globalState.location, action)
-        }
+        })
       })
     })
 

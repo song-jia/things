@@ -32,7 +32,7 @@
       }
     },
     "test:server": {
-      "command": "nyc report -r text -r lcov --report-dir coverage/server mocha --harmony-async-await  server/tests/**/*.spec.js",
+      "command": "nyc mocha --harmony-async-await  server/tests/**/*.spec.js && nyc report -r lcov --report-dir coverage/server",
       "env": {
         "NODE_ENV": "test"
       }

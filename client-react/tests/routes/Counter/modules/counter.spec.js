@@ -59,10 +59,13 @@ describe('(Redux Module) Counter', () => {
         counter : counterReducer(undefined, {})
       }
       _dispatchSpy = sinon.spy((action) => {
-        _globalState = {
-          ..._globalState,
-          counter : counterReducer(_globalState.counter, action)
-        }
+        _globalState = Object.assign(
+          {},
+          _globalState,
+          {
+            counter: counterReducer(_globalState.counter, action)
+          }
+        )
       })
       _getStateSpy = sinon.spy(() => {
         return _globalState

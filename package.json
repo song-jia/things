@@ -14,7 +14,7 @@
     "test:client": "better-npm-run test:client",
     "test:client-watch": "npm run test:client -- --watch",
     "test:server": "better-npm-run test:server",
-    "codecov": "find coverage -name lcov.info -exec cat {} + | codecov"
+    "codecov": "codecov"
   },
   "betterScripts": {
     "client-dev-server": {
@@ -25,7 +25,7 @@
       }
     },
     "test:client": {
-      "command": "node ./node_modules/karma/bin/karma start --log-level debug client-react/config/karma.config",
+      "command": "node ./node_modules/karma/bin/karma start client-react/config/karma.config",
       "env": {
         "NODE_ENV": "test",
         "DEBUG": "app:*"

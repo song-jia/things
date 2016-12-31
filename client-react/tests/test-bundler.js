@@ -6,7 +6,7 @@ import chai from 'chai'
 import sinonChai from 'sinon-chai'
 import chaiAsPromised from 'chai-as-promised'
 import chaiEnzyme from 'chai-enzyme'
-// import Promise from 'bluebird'
+import Promise from 'bluebird'
 
 chai.use(sinonChai)
 chai.use(chaiAsPromised)
@@ -16,7 +16,7 @@ global.chai = chai
 global.sinon = sinon
 global.expect = chai.expect
 global.should = chai.should()
-// global.Promise = Promise
+global.Promise = Promise
 
 // ---------------------------------------
 // Require Tests

@@ -1,6 +1,7 @@
-import fetch from 'isomorphic-fetch'
+import 'isomorphic-fetch'
 import queryString from 'query-string'
 import {browserHistory} from 'react-router'
+// import config from '../../config/project.config'
 // =========================
 // constants
 // =========================
@@ -18,7 +19,7 @@ const LOGOUT = 'LOGOUT'
 export const authenticate = (id, password) => {
   return (dispatch) => {
     dispatch(fetching())
-    return fetch('api/auth', {
+    return fetch('/api/auth', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -41,8 +42,6 @@ export const authenticate = (id, password) => {
       } else {
         dispatch(authFailed('连接失败，请重试。'))
       }
-    }).catch((reason) => {
-      console.log(reason)
     })
   }
 }
@@ -103,9 +102,6 @@ function getInitState () {
 }
 
 export default function authenticationReducer (state = getInitState(), action) {
-  if (!action) {
-    return state
-  }
   switch (action.type) {
     case FETCHING:
       state = Object.assign(

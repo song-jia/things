@@ -45,7 +45,9 @@ const karmaConfig = {
     externals : Object.assign({}, webpackConfig.externals, {
       'react/addons'                   : true,
       'react/lib/ExecutionEnvironment' : true,
-      'react/lib/ReactContext'         : 'window'
+      'react/lib/ReactContext'         : 'window',
+      // 修复错误：引用nock时报错"Error: Cannot resolve module 'fs'"
+      fs: '{}'
     }),
     sassLoader : webpackConfig.sassLoader
   },

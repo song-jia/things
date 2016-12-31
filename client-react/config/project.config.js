@@ -53,7 +53,8 @@ const config = {
     'react-redux',
     'react-router',
     'redux'
-  ]
+  ],
+  API_HOST: ''
 }
 
 /************************************************
@@ -123,6 +124,11 @@ if (overrides) {
   Object.assign(config, overrides(config))
 } else {
   debug('No environment overrides found, defaults will be used.')
+}
+// 如果是测试环境把API_HOST设置成http://localhost方便mock ajax请求，因为nock不能mock
+// 相对路径的请求
+if (config.globals.__TEST__) {
+  config.API_HOST = 'http://test.com'
 }
 
 module.exports = config

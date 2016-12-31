@@ -13,21 +13,21 @@ const password = require('../utils/password')
 
 /*
  * 登录处理：
- * 客户端需要通过POST方法发送username和password, 服务器端验证username和password。
+ * 客户端需要通过POST方法发送id和password, 服务器端验证id和password。
  * 如果验证通过服务器返回JWT，其中包含过期时间和authID。同时在服务器端将本次登录记入历史。
  * 如果验证失败，返回401状态和错误信息。
 */
 module.exports.auth = async (ctx) => {
   const body = ctx.request.body
-  const user = await usersRepo.findByName(body.username)
+  const user = await usersRepo.findByName(body.id)
   // user does not exist.
   if (user.length === 0) {
-    ctx.status = 401
-    ctx.body = 'user does not exist.'
+    ctx.status = 200
+    ctx.body = {status: 'error', error: '101', errorMessage: 'user does not exist.'}
   // password is wrong.
   } else if (passwordIsWrong(body.password, user[0].password)) {
-    ctx.status = 401
-    ctx.body = 'password is not correct.'
+    ctx.status = 200
+    ctx.body = {status: 'error', error: '102', errorMessage: 'password is not correct.'}
   // authN success, save auth record.
   } else {
     const authId = await authModel.saveLoginInfo(

@@ -22,7 +22,7 @@ app.use(async (ctx, next) => {
   }
 })
 
-app.use(bodyParser());
+app.use(bodyParser())
 
 app.use(router.unprotected.routes())
 // JWT token校验控件，如果校验失败，下面的中间件都不会执行。

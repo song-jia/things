@@ -1,0 +1,14 @@
+:local(.section) {
+  border: 1px solid lightgrey;
+  padding: 25px;
+  border-radius: 5px;
+}
+:local(.title) {
+  margin-bottom: 5px;
+}
+:local(.content) {
+  height: 100%;
+}
+:local(.noticeBox) {
+  height: 40px;
+}

@@ -1,3 +1,8 @@
+@import '../../styles/base';
+
+.header {
+  background-color: $blue;
+}
 .route--active {
   font-weight: bold;
   text-decoration: underline;

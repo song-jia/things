@@ -1,15 +1,22 @@
 import React from 'react'
+import { Layout } from 'antd'
 import Header from '../../components/Header'
+import Sider from '../../components/Sider'
 import './CoreLayout.scss'
 import '../../styles/core.scss'
 
+const { Content } = Layout
+
 export const CoreLayout = ({ children }) => (
-  <div className='container text-center'>
+  <Layout>
     <Header />
-    <div className='core-layout__viewport'>
-      {children}
-    </div>
-  </div>
+    <Layout>
+      <Sider />
+      <Content>
+        {children}
+      </Content>
+    </Layout>
+  </Layout>
 )
 
 CoreLayout.propTypes = {

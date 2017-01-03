@@ -30,11 +30,13 @@ const APP_ENTRY = project.paths.client('main.js')
 
 webpackConfig.entry = {
   app: __DEV__
-    ? [APP_ENTRY].concat(`webpack-hot-middleware/client?path=${project.compiler_public_path}__webpack_hmr`)
+    ? [
+      'webpack-hot-middleware/client',
+      APP_ENTRY]
     : [APP_ENTRY],
   vendor: project.compiler_vendors
 }
-
+debug('11111' + webpackConfig.entry.app)
 // ------------------------------------
 // Bundle Output
 // ------------------------------------
@@ -88,6 +90,7 @@ if (__TEST__ && !argv.watch) {
 if (__DEV__) {
   debug('Enabling plugins for live development (HMR, NoErrors).')
   webpackConfig.plugins.push(
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   )

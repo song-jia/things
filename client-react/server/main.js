@@ -9,7 +9,6 @@ var proxy = require('http-proxy-middleware')
 
 const app = express()
 
-app.use('/api', proxy({target: 'http://localhost:5000', changeOrigin: true}))
 // This rewrites all routes requests to the root /index.html file
 // (ignoring file requests). If you want to implement universal
 // rendering, you'll want to remove this middleware.
@@ -34,30 +33,28 @@ if (project.env === 'development') {
     lazy        : false,
     stats       : project.compiler_stats
   }))
-  app.use(require('webpack-hot-middleware')(compiler, {
-    path: `${webpackConfig.output.publicPath}/__webpack_hmr`
-  }))
+  app.use(require('webpack-hot-middleware')(compiler))
 
   // Serve static assets from ~/public since Webpack is unaware of
   // these files. This middleware doesn't need to be enabled outside
   // of development since this directory will be copied into ~/dist
   // when the application is compiled.
   app.use(express.static(project.paths.public()))
-
+  app.use('/api', proxy({target: 'http://localhost:5000', changeOrigin: true}))
   // This rewrites all routes requests to the root /index.html file
   // (ignoring file requests). If you want to implement universal
   // rendering, you'll want to remove this middleware.
-  app.use('*', function (req, res, next) {
-    const filename = path.join(compiler.outputPath, 'index.html')
-    compiler.outputFileSystem.readFile(filename, (err, result) => {
-      if (err) {
-        return next(err)
-      }
-      res.set('content-type', 'text/html')
-      res.send(result)
-      res.end()
-    })
-  })
+  // app.use('*', function (req, res, next) {
+  //   const filename = path.join(compiler.outputPath, 'index.html')
+  //   compiler.outputFileSystem.readFile(filename, (err, result) => {
+  //     if (err) {
+  //       return next(err)
+  //     }
+  //     res.set('content-type', 'text/html')
+  //     res.send(result)
+  //     res.end()
+  //   })
+  // })
 } else {
   debug(
     'Server is being run outside of live development mode, meaning it will ' +

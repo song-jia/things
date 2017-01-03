@@ -1,9 +1,29 @@
 @import '../../styles/base';
 
-.header {
+.layoutHeader {
   background-color: $blue;
-}
-.route--active {
-  font-weight: bold;
-  text-decoration: underline;
+  height: 6%;
+  min-height: 40px;
+
+  .links {
+    padding-top: 8px;
+    padding-right: 10px;
+    .link {
+      color: white;
+      float: right;
+      font-size: 14px;
+    }
+  }
+
+  .logo {
+    color: white;
+    font-size: 20px;
+    padding-top: 5px;
+    padding-left: 10px;
+
+    .sub {
+      font-size: 7px;
+      margin-left: 5px;
+    }
+  }
 }

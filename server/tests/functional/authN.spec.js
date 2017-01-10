@@ -8,13 +8,15 @@ const password = require('../../utils/password')
 const users = db.get('users')
 const jwt = require('koa-jwt')
 const config = require('../../config')
+const monk = require('monk')
 
 describe('Authentication API', function () {
+  const stubUser = {_id: monk.id(), name: 'test', password: password.encrypt('111111')}
   beforeEach(function () {
     return users.drop()
       .then(function () {
         return users.insert([
-          {name: 'test', password: password.encrypt('111111')}
+          stubUser
         ])
       })
   })
@@ -49,6 +51,7 @@ describe('Authentication API', function () {
           assert.ok(res.body.token)
           let payload = jwt.verify(res.body.token, config.JWT_KEY)
           assert.equal('test', payload.user)
+          assert.equal(stubUser._id, payload.sub)
           users.findOne({name: 'test'})
             .then(function (user) {
               assert.equal(user['loginRecord'].length, 1)
@@ -94,7 +97,7 @@ describe('Authentication API', function () {
         })
         .then(function (res) {
           assert.equal(401, res.status)
-          assert.equal(res.text, 'permission denied.')
+          assert.equal(res.text, 'authentication token is invalid.')
         })
     })
   })

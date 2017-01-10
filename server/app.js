@@ -16,7 +16,7 @@ app.use(async (ctx, next) => {
   } catch (err) {
     if (err.status === 401) {
       ctx.status = 401
-      ctx.body = 'permission denied.'
+      ctx.body = err.message ? err.message : 'permission denied.'
       console.log(err.message)
     }
   }

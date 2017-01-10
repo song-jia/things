@@ -37,7 +37,7 @@ module.exports.auth = async (ctx) => {
     ctx.response.body = {
       status: 'success',
       token: jwt.sign(
-        {user: user[0].name, authID: authId},
+        {sub: user[0]._id, user: user[0].name, authID: authId},
         config.JWT_KEY,
         {expiresIn: '1d'}
       )
@@ -57,7 +57,9 @@ module.exports.logout = async (ctx) => {
 module.exports.checkToken = async (ctx, next) => {
   let user = await usersRepo.getUserByLoginID(ctx.state.user.user, ctx.state.user.authID)
   if (user === null) {
-    throw {status: 401}
+    let e = new Error('authentication token is invalid.')
+    e.status = 401
+    throw e
   }
   await next()
 }
@@ -68,4 +70,3 @@ module.exports.checkToken = async (ctx, next) => {
 function passwordIsWrong (raw, hash) {
   return !password.compare(raw, hash)
 }
-

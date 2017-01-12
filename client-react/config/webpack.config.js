@@ -1,7 +1,5 @@
 const argv = require('yargs').argv
 const webpack = require('webpack')
-// 压缩css
-const cssnano = require('cssnano')
 // 用于生成一个简单的html文件引用打包后的js
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -163,24 +161,6 @@ webpackConfig.module.loaders.push({
 webpackConfig.sassLoader = {
   includePaths: project.paths.client('styles')
 }
-
-webpackConfig.postcss = [
-  cssnano({
-    autoprefixer: {
-      add: true,
-      remove: true,
-      browsers: ['last 2 versions']
-    },
-    discardComments: {
-      removeAll: true
-    },
-    discardUnused: false,
-    mergeIdents: false,
-    reduceIdents: false,
-    safe: true,
-    sourcemap: true
-  })
-]
 
 // File loaders
 /* eslint-disable */

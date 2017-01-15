@@ -17,6 +17,7 @@ protectedAPI.del('/api/auth', auth.logout)
 // stuffs
 protectedAPI.get('/api/stuffs', stuffs.all)
 protectedAPI.post('/api/stuffs', stuffs.new)
+protectedAPI.put('/api/stuffs', stuffs.update)
 
 module.exports.protected = protectedAPI
 module.exports.unprotected = unprotected

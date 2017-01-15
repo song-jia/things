@@ -79,4 +79,24 @@ describe('stuffs API', () => {
         })
     })
   })
+  describe('update stuff.', () => {
+    it('should update stuff.', () => {
+      return request
+        .put('/api/stuffs')
+        .set({
+          Authorization: `Bearer ${token}`
+        })
+        .type('json')
+        .send({id: stuff1Id.toString(), title: 'update to new title'})
+        .expect(200)
+        .then((res) => {
+          expect(res.body.success).to.be.true
+          return stuffs.findOne({_id: stuff1Id})
+            .then((stuff) => {
+              expect(stuff.title).to.equal('update to new title')
+              expect(stuff.update_time).to.be.ok
+            })
+        })
+    })
+  })
 })

@@ -18,3 +18,14 @@ module.exports.new = async (ctx) => {
     id: result._id
   }
 }
+
+module.exports.update = async (ctx) => {
+  await stuffsRepo.update(
+    {_id: monk.id(ctx.request.body.id), userId: monk.id(ctx.state.user.sub)},
+    {title: ctx.request.body.title, update_time: Date.now()}
+  )
+  ctx.response.status = 200
+  ctx.response.body = {
+    success: true
+  }
+}

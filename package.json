@@ -32,7 +32,7 @@
       }
     },
     "test:server": {
-      "command": "nyc mocha --harmony-async-await  server/tests/**/*.spec.js && nyc report -r lcov --report-dir coverage/server",
+      "command": "nyc mocha --harmony-async-await server/tests/**/*.spec.js && nyc report -r lcov --report-dir coverage/server",
       "env": {
         "NODE_ENV": "test"
       }
@@ -129,5 +129,11 @@
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2",
     "yargs": "^6.3.0"
+  },
+  "nyc": {
+    "exclude": [
+      "**/*.spec.js",
+      "**/config.js"
+    ]
   }
 }

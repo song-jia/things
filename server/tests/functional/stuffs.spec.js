@@ -10,7 +10,7 @@ const password = require('../../utils/password')
 const stuffs = db.get('stuffs')
 const monk = require('monk')
 
-describe('stuffs', () => {
+describe('stuffs API', () => {
   const userId = monk.id()
   const stuff1Id = monk.id()
   const stuff2Id = monk.id()
@@ -53,6 +53,29 @@ describe('stuffs', () => {
             {_id: stuff1Id.toString(), title: 'stuff 1'},
             {_id: stuff2Id.toString(), title: 'stuff 2'}
           ])
+        })
+    })
+  })
+  describe('create new stuff.', () => {
+    it('should create new stuff.', () => {
+      return request
+        .post('/api/stuffs')
+        .set({
+          Authorization: `Bearer ${token}`
+        })
+        .type('json')
+        .send({title: 'new stuff test title'})
+        .expect(200)
+        .then(function (res) {
+          expect(res.body.success).to.be.true
+          return stuffs.find({title: 'new stuff test title'})
+            .then((stuff) => {
+              expect(stuff.length).to.equal(1)
+              expect(stuff[0]._id.toString()).to.equal(res.body.id)
+              expect(stuff[0].title).to.equal('new stuff test title')
+              expect(stuff[0].userId).to.equal(userId.toString())
+              expect(stuff[0].create_time).to.be.ok
+            })
         })
     })
   })

@@ -133,8 +133,8 @@ webpackConfig.module.loaders = [{
 // ------------------------------------
 // Style Loaders
 // ------------------------------------
-// We use cssnano with the postcss loader, so we tell
-// css-loader not to duplicate minimization.
+// 已经使用cssnano压缩css（详细配置见：postcss.config.js）
+// css-loader 不必重复压缩css.
 // 使用[name]---[local]---[hash:base64:5]命名local css选择器。
 const BASE_CSS_LOADER = 'css?sourceMap&-minimize&localIdentName=[name]---[local]---[hash:base64:5]'
 

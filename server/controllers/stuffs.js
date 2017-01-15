@@ -7,3 +7,14 @@ module.exports.all = async (ctx) => {
   ctx.response.status = 200
   ctx.response.body = stuffs
 }
+
+module.exports.new = async (ctx) => {
+  let result = await stuffsRepo.insert(
+    {userId: ctx.state.user.sub, title: ctx.request.body.title, 'create_time': Date.now()}
+  )
+  ctx.response.status = 200
+  ctx.response.body = {
+    success: true,
+    id: result._id
+  }
+}

@@ -14,6 +14,9 @@ unprotected.post('/api/auth', auth.auth)
 const protectedAPI = router()
 // 退出
 protectedAPI.del('/api/auth', auth.logout)
+// stuffs
 protectedAPI.get('/api/stuffs', stuffs.all)
+protectedAPI.post('/api/stuffs', stuffs.new)
+
 module.exports.protected = protectedAPI
 module.exports.unprotected = unprotected

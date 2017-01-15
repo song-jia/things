@@ -29,3 +29,13 @@ module.exports.update = async (ctx) => {
     success: true
   }
 }
+
+module.exports.remove = async (ctx) => {
+  if (ctx.request.body.id) {
+    await stuffsRepo.remove({_id: monk.id(ctx.request.body.id), userId: monk.id(ctx.state.user.sub)})
+  }
+  ctx.response.status = 200
+  ctx.response.body = {
+    success: true
+  }
+}

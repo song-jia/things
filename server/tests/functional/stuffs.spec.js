@@ -41,7 +41,7 @@ describe('stuffs API', () => {
     ])
   })
   describe('get user\'s all stuffs', () => {
-    it('should return list of stuffs in json.', () => {
+    it('should return user\'s stuffs in json.', () => {
       return request
         .get('/api/stuffs')
         .set({
@@ -57,7 +57,7 @@ describe('stuffs API', () => {
     })
   })
   describe('create new stuff.', () => {
-    it('should create new stuff.', () => {
+    it('should create new stuff, and return the id of new stuff.', () => {
       return request
         .post('/api/stuffs')
         .set({
@@ -95,6 +95,24 @@ describe('stuffs API', () => {
             .then((stuff) => {
               expect(stuff.title).to.equal('update to new title')
               expect(stuff.update_time).to.be.ok
+            })
+        })
+    })
+  })
+  describe('delete stuff.', () => {
+    it('should delete stuff.', () => {
+      return request
+        .del('/api/stuffs')
+        .type('json')
+        .set({
+          Authorization: `Bearer ${token}`
+        })
+        .send({id: stuff1Id.toString()})
+        .expect(200)
+        .then(() => {
+          return stuffs.find({_id: stuff1Id})
+            .then((result) => {
+              expect(result.length).to.equal(0)
             })
         })
     })

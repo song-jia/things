@@ -9,6 +9,14 @@ module.exports.all = async (ctx) => {
 }
 
 module.exports.new = async (ctx) => {
+  if (!objectHasProperties(ctx.request.body, ['title'])) {
+    ctx.response.status = 200
+    ctx.response.body = {
+      success: false,
+      errorMessage: 'required field is missed.'
+    }
+    return true
+  }
   let result = await stuffsRepo.insert(
     {userId: ctx.state.user.sub, title: ctx.request.body.title, 'create_time': Date.now()}
   )
@@ -20,13 +28,28 @@ module.exports.new = async (ctx) => {
 }
 
 module.exports.update = async (ctx) => {
-  await stuffsRepo.update(
+  if (!objectHasProperties(ctx.request.body, ['id', 'title'])) {
+    ctx.response.status = 200
+    ctx.response.body = {
+      success: false,
+      errorMessage: 'required field is missed.'
+    }
+    return true
+  }
+  let updated = await stuffsRepo.update(
     {_id: monk.id(ctx.request.body.id), userId: monk.id(ctx.state.user.sub)},
     {title: ctx.request.body.title, update_time: Date.now()}
   )
   ctx.response.status = 200
-  ctx.response.body = {
-    success: true
+  if (updated.n === 0) {
+    ctx.response.body = {
+      success: false,
+      errorMessage: 'id is invalid.'
+    }
+  } else {
+    ctx.response.body = {
+      success: true
+    }
   }
 }
 
@@ -38,4 +61,11 @@ module.exports.remove = async (ctx) => {
   ctx.response.body = {
     success: true
   }
+}
+
+function objectHasProperties (obj = {}, properties = []) {
+  return properties.reduce(
+    (result, property) => result && obj.hasOwnProperty(property),
+    true
+  )
 }

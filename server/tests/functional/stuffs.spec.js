@@ -57,46 +57,100 @@ describe('stuffs API', () => {
     })
   })
   describe('create new stuff.', () => {
-    it('should create new stuff, and return the id of new stuff.', () => {
-      return request
-        .post('/api/stuffs')
-        .set({
-          Authorization: `Bearer ${token}`
-        })
-        .type('json')
-        .send({title: 'new stuff test title'})
-        .expect(200)
-        .then(function (res) {
-          expect(res.body.success).to.be.true
-          return stuffs.find({title: 'new stuff test title'})
-            .then((stuff) => {
-              expect(stuff.length).to.equal(1)
-              expect(stuff[0]._id.toString()).to.equal(res.body.id)
-              expect(stuff[0].title).to.equal('new stuff test title')
-              expect(stuff[0].userId).to.equal(userId.toString())
-              expect(stuff[0].create_time).to.be.ok
-            })
-        })
+    describe('when request API by POST method with proper data.', () => {
+      it('should create new stuff, and return the id of new stuff.', () => {
+        return request
+          .post('/api/stuffs')
+          .set({
+            Authorization: `Bearer ${token}`
+          })
+          .type('json')
+          .send({title: 'new stuff test title'})
+          .expect(200)
+          .then(function (res) {
+            expect(res.body.success).to.be.true
+            return stuffs.find({title: 'new stuff test title'})
+              .then((stuff) => {
+                expect(stuff.length).to.equal(1)
+                expect(stuff[0]._id.toString()).to.equal(res.body.id)
+                expect(stuff[0].title).to.equal('new stuff test title')
+                expect(stuff[0].userId).to.equal(userId.toString())
+                expect(stuff[0].create_time).to.be.ok
+              })
+          })
+      })
+    })
+    describe('when required fields does not exist in request body.', () => {
+      it('should failed and return message.', () => {
+        return request
+          .post('/api/stuffs')
+          .set({
+            Authorization: `Bearer ${token}`
+          })
+          .type('json')
+          .send({})
+          .expect(200)
+          .then(function (res) {
+            expect(res.body.success).to.be.false
+            expect(res.body.errorMessage).to.equal('required field is missed.')
+          })
+      })
     })
   })
   describe('update stuff.', () => {
-    it('should update stuff.', () => {
-      return request
-        .put('/api/stuffs')
-        .set({
-          Authorization: `Bearer ${token}`
-        })
-        .type('json')
-        .send({id: stuff1Id.toString(), title: 'update to new title'})
-        .expect(200)
-        .then((res) => {
-          expect(res.body.success).to.be.true
-          return stuffs.findOne({_id: stuff1Id})
-            .then((stuff) => {
-              expect(stuff.title).to.equal('update to new title')
-              expect(stuff.update_time).to.be.ok
+    describe('when request API by PUT method with proper data.', () => {
+      it('should update stuff.', () => {
+        return request
+          .put('/api/stuffs')
+          .set({
+            Authorization: `Bearer ${token}`
+          })
+          .type('json')
+          .send({id: stuff1Id.toString(), title: 'update to new title'})
+          .expect(200)
+          .then((res) => {
+            expect(res.body.success).to.be.true
+            return stuffs.findOne({_id: stuff1Id})
+              .then((stuff) => {
+                expect(stuff.title).to.equal('update to new title')
+                expect(stuff.update_time).to.be.ok
+              })
+          })
+      })
+    })
+    describe('when request without proper data.', () => {
+      describe('when id could not be found.', () => {
+        it('should failed and return message.', () => {
+          return request
+            .put('/api/stuffs')
+            .set({
+              Authorization: `Bearer ${token}`
+            })
+            .type('json')
+            .send({id: monk.id().toString(), title: 'update to new title'})
+            .expect(200)
+            .then((res) => {
+              expect(res.body.success).to.be.false
+              expect(res.body.errorMessage).to.equal('id is invalid.')
             })
         })
+      })
+      describe('when required field does not exist in request body.', () => {
+        it('should failed and return message.', () => {
+          return request
+            .put('/api/stuffs')
+            .set({
+              Authorization: `Bearer ${token}`
+            })
+            .type('json')
+            .send({id: stuff1Id})
+            .expect(200)
+            .then((res) => {
+              expect(res.body.success).to.be.false
+              expect(res.body.errorMessage).to.equal('required field is missed.')
+            })
+        })
+      })
     })
   })
   describe('delete stuff.', () => {

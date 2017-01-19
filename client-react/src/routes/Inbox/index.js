@@ -1,8 +1,51 @@
 import React from 'react'
+import { Table, Button, Checkbox } from 'antd'
+import './inbox.scss'
+
+const columns = [
+  {
+    width: '30',
+    render: () => <Checkbox />
+  },
+  {
+    title: '收集篮',
+    dataIndex: 'title',
+    key: 'title',
+    render: text => <span>{text}</span>
+  },
+  {
+    width: '80',
+    render: (text, record) => (
+      <span>
+        <Button icon='delete' /> <Button icon='edit' />
+      </span>
+    )
+  }
+]
+
+const data = [
+  {
+    key: '1',
+    title: 'stuff 1'
+  },
+  {
+    key: '2',
+    title: 'stuff 2'
+  },
+  {
+    key: '3',
+    title: 'stuff 3'
+  }
+]
 
 const Inbox = () => (
-  <div className='duck'>
-    <h1>Inbox</h1>
+  <div className='inbox'>
+    <div className='toolbar'>
+      <Button icon='plus-circle-o'>添加</Button>
+    </div>
+    <div className='list'>
+      <Table columns={columns} dataSource={data} />
+    </div>
   </div>
 )
 

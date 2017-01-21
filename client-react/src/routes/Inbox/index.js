@@ -23,20 +23,17 @@ const columns = [
   }
 ]
 
-const data = [
-  {
-    key: '1',
-    title: 'stuff 1'
-  },
-  {
-    key: '2',
-    title: 'stuff 2'
-  },
-  {
-    key: '3',
-    title: 'stuff 3'
+const data = stubItems(35)
+
+function stubItems (number) {
+  let i = 0
+  let result = []
+  while (i < number) {
+    result[i] = {key: i + 1, title: 'stuff ' + (i + 1)}
+    i++
   }
-]
+  return result
+}
 
 const Inbox = () => (
   <div className='inbox'>

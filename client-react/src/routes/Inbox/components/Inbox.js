@@ -1,7 +1,7 @@
 import React from 'react'
-import { Table, Button, Checkbox, Modal, Form, Input } from 'antd'
+import { Table, Button, Checkbox } from 'antd'
+import ItemEditor from './ItemEditor'
 import './inbox.scss'
-const FormItem = Form.Item
 
 const data = stubItems(35)
 
@@ -52,25 +52,10 @@ class Inbox extends React.Component {
         <div className='list'>
           <Table columns={columns} dataSource={data} />
         </div>
-        <Modal
-          title='新事件'
-          visible={this.state.showEditor}
-          okText='保存'
-          onOk={() => this.closeEditor()}
-          confirmLoading={this.state.confirmLoading}
-          onCancel={() => this.closeEditor()}
-        >
-          <Form onSubmit={(e) => this.handleSubmit(e)}>
-            <FormItem
-              className=''>
-              <Input
-                id='title'
-                placeholder='新事件'
-                value={this.state.title}
-                onChange={(e) => this.setState({user: e.target.value})} />
-            </FormItem>
-          </Form>
-        </Modal>
+        <ItemEditor
+          title='时事件'
+          showEditor={this.state.showEditor}
+          close={() => this.closeEditor()} />
       </div>
     )
   }
